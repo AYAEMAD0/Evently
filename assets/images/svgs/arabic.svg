@@ -1,0 +1,23 @@
+<svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_162_2916)" filter="url(#filter0_d_162_2916)">
+<path d="M15.6202 22.236C21.616 22.236 26.4765 17.3755 26.4765 11.3798C26.4765 5.38399 21.616 0.523468 15.6202 0.523468C9.62444 0.523468 4.76392 5.38399 4.76392 11.3798C4.76392 17.3755 9.62444 22.236 15.6202 22.236Z" fill="#F0F0F0"/>
+<path d="M15.6205 0.523193C10.9527 0.523193 6.97337 3.46932 5.43945 7.6034H25.8016C24.2676 3.46932 20.2883 0.523193 15.6205 0.523193Z" fill="#D80027"/>
+<path d="M15.6205 22.2363C20.2883 22.2363 24.2676 19.2902 25.8015 15.1561H5.43945C6.97337 19.2902 10.9527 22.2363 15.6205 22.2363Z" fill="black"/>
+<path d="M19.3962 10.1997H16.5641C16.5641 9.67832 16.1415 9.25565 15.6201 9.25565C15.0988 9.25565 14.6761 9.67832 14.6761 10.1997H11.844C11.844 10.7211 12.2981 11.1437 12.8195 11.1437H12.788C12.788 11.6651 13.2107 12.0877 13.7321 12.0877C13.7321 12.6091 14.1547 13.0318 14.6761 13.0318H16.5641C17.0855 13.0318 17.5082 12.6091 17.5082 12.0877C18.0296 12.0877 18.4522 11.6651 18.4522 11.1437H18.4208C18.9421 11.1437 19.3962 10.7211 19.3962 10.1997Z" fill="#FF9811"/>
+</g>
+<defs>
+<filter id="filter0_d_162_2916" x="0.763916" y="0.523468" width="29.7126" height="29.7126" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_162_2916"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_162_2916" result="shape"/>
+</filter>
+<clipPath id="clip0_162_2916">
+<rect width="21.7126" height="21.7126" fill="white" transform="translate(4.76392 0.523468)"/>
+</clipPath>
+</defs>
+</svg>
