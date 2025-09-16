@@ -34,7 +34,6 @@ static const String deleteImage='assets/images/svgs/delete.svg';
 static const String editImage='assets/images/svgs/edit.svg';
 
 static const String moonImage='assets/images/svgs/moon.svg';
-static const String sunDarkImage='assets/images/svgs/sunDark.svg';
 static const String sunLightImage='assets/images/svgs/sunLight.svg';
 
 

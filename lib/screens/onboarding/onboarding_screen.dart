@@ -1,177 +1,189 @@
-import 'package:evently/core/utils/app_asset.dart';
-import 'package:evently/core/utils/app_color.dart';
-import 'package:evently/core/utils/app_route.dart';
-import 'package:evently/core/utils/app_style.dart';
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/core/utils/app_theme.dart';
+import 'package:evently/provider/language_provider/language_provider.dart';
+import 'package:evently/provider/theme_provider/theme_provider.dart';
+import 'package:evently/screens/onboarding/onboarding_other.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:introduction_screen/introduction_screen.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import '../../core/utils/app_asset.dart';
+import '../../core/utils/app_color.dart';
+import '../../core/utils/app_style.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
 
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  int themeValue=0;
+  int languageValue=0;
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    var theme = Provider.of<ThemeProvider>(context);
+    var language = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.transparentColor,
         title: Image.asset(
           AppAsset.logoImage,
-          height: height * 0.05,
+          height: height * 0.06,
           width: width * 0.40,
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.01),
-        child: IntroductionScreen(
-          pages: [
-            builtPageView(
-                AppAsset.onboardingImage1,
-                'Personalize Your Experience',
-                "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
-                footerWidget: builtFooter()
+        padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(AppAsset.onboardingImage1),
+            Text(
+              "title1".tr(),
+              style: AppStyle.bold20Primary,
+              textAlign: TextAlign.start,
             ),
-            builtPageView(
-              AppAsset.onboardingImage2,
-              'Find Events That Inspire You',
-              "Dive into a world of events crafted to fit your unique interests. Whether you're into live music, art workshops, professional networking, or simply discovering new experiences, we have something for everyone. Our curated recommendations will help you explore, connect, and make the most of every opportunity around you.",
+            SizedBox(height: height * 0.02),
+            Text(
+              "desc1".tr(),
+              style: theme.isDark()
+                  ? AppTheme.themeDark.textTheme.headlineSmall
+                  : AppTheme.themeLight.textTheme.headlineSmall,
+              textAlign: TextAlign.start,
+              maxLines: 10,
             ),
-            builtPageView(
-              AppAsset.onboardingImage3,
-              'Effortless Event Planning',
-              "Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.",
+            SizedBox(height: height * 0.02),
+
+            // language
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('language'.tr(), style: AppStyle.bold20Primary),
+                AnimatedToggleSwitch<int>.size(
+                  current: languageValue,
+                  values: const [0, 1],
+                  iconOpacity: 1,
+                  height: 40,
+                  indicatorSize: Size(width * 0.102, height * 0.050),
+                  customIconBuilder: (context, local, global) {
+                    if (local.value == 0) {
+                      return SvgPicture.asset(
+                        AppAsset.englishImage,
+                        width: 25,
+                        height: 25,
+                      );
+                    } else {
+                      return SvgPicture.asset(
+                        AppAsset.arabicImage,
+                        width: 25,
+                        height: 25,
+                      );
+                    }
+                  },
+                  onChanged: (value) {
+                    return setState(() {
+                      languageValue = value;
+                      // english 0   arabic 1
+                      if(value==0){
+                        context.setLocale(Locale('en'));
+                        language.changeLanguage('en');
+                      }else{
+                        context.setLocale(Locale('ar'));
+                        language.changeLanguage('ar');
+                      }
+                    });
+                  },
+                  borderWidth: 1,
+                  style: ToggleStyle(
+                    borderColor: AppColor.primaryColor,
+                    indicatorColor: AppColor.primaryColor,
+                    backgroundColor: AppColor.transparentColor,
+                  ),
+                ),
+              ],
             ),
-            builtPageView(
-              AppAsset.onboardingImage4,
-              'Connect with Friends & Share Moments',
-              "Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.",
+
+            SizedBox(height: height * 0.022),
+            // theme
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('theme'.tr(), style: AppStyle.bold20Primary),
+                AnimatedToggleSwitch<int>.size(
+                  current: themeValue,
+                  values: const [0, 1],
+                  iconOpacity: 1,
+                  height: 40,
+                  indicatorSize: Size(width * 0.102, height * 0.050),
+                  customIconBuilder: (context, local, global) {
+                    if (local.value == 0) {
+                      return SvgPicture.asset(
+                        AppAsset.sunLightImage,
+                        color: !(theme.isDark())
+                            ? AppColor.whiteColor
+                            : AppColor.primaryColor,
+                        width: 18,
+                        height: 18,
+                      );
+                    } else {
+                      return SvgPicture.asset(
+                        AppAsset.moonImage,
+                        color: theme.isDark()
+                            ? AppColor.whiteColor
+                            : AppColor.primaryColor,
+                        width: 20,
+                        height: 20,
+                      );
+                    }
+                  },
+                  onChanged: (value) {
+                    return setState(() {
+                      themeValue = value;
+                      // Light 0    Dark 1
+                      if (value == 0) {
+                        theme.changeTheme(ThemeMode.light);
+                      } else {
+                        theme.changeTheme(ThemeMode.dark);
+                      }
+                    });
+                  },
+                  borderWidth: 1,
+                  style: ToggleStyle(
+                    borderColor: AppColor.primaryColor,
+                    indicatorColor: AppColor.primaryColor,
+                    backgroundColor: AppColor.transparentColor,
+                  ),
+                ),
+              ],
             ),
+            Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                //todo nav to onboarding other
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => OnboardingOther()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColor.primaryColor,
+                foregroundColor: AppColor.whiteColor,
+                padding: EdgeInsets.all(5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text('let_start'.tr(), style: AppStyle.medium20White),
+            ),
+            SizedBox(height: height * 0.01),
           ],
-          showBackButton: true,
-          back: builtCircleBtn(Icons.arrow_back),
-          next: builtCircleBtn(Icons.arrow_forward),
-          done: builtCircleBtn(Icons.arrow_forward),
-          onDone: () {
-            Navigator.pushReplacementNamed(context, AppRoute.homeRouteName);
-          },
-          showDoneButton: true,
-          dotsDecorator: DotsDecorator(
-            size: const Size.square(10.0),
-            activeSize: const Size(20.0, 10.0),
-            activeColor: AppColor.primaryColor,
-            color: AppColor.blackColor,
-            spacing: const EdgeInsets.symmetric(horizontal: 3.0),
-            activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-          ),
         ),
       ),
     );
   }
-
-  PageViewModel builtPageView(String image, String title, String desc,
-      {Widget? footerWidget}) {
-    return PageViewModel(
-      image: Image.asset(image),
-      titleWidget: Text(title, style: AppStyle.bold20Primary),
-      footer: footerWidget,
-      bodyWidget: Text(
-      desc,
-      style: AppStyle.bold16Black,
-      textAlign: TextAlign.start,
-      maxLines: 6,
-    ),);
-  }
-
-  Widget builtCircleBtn(icon) {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: AppColor.primaryColor),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Icon(icon, color: AppColor.primaryColor),
-    );
-  }
-
-  Widget builtFooter() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 8,
-      children: [
-        // language
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Language', style: AppStyle.bold20Primary),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: AppColor.primaryColor, width: 2),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 21,
-                    width: 21,
-                    child: SvgPicture.asset(AppAsset.englishImage),
-                  ),
-                  const SizedBox(width: 4), // بدل spacing
-                  SizedBox(
-                    height: 21,
-                    width: 25,
-                    child: SvgPicture.asset(AppAsset.arabicImage),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        // theme
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Theme', style: AppStyle.bold20Primary),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: AppColor.primaryColor, width: 2),
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(AppAsset.sunDarkImage),
-                  const SizedBox(width: 4), // بدل spacing
-                  SvgPicture.asset(AppAsset.moonImage),
-                ],
-              ),
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () {
-            //todo onboarding one button
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryColor,
-            foregroundColor: AppColor.whiteColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: const Text('Let’s Start'),
-        ),
-      ],
-    );
-  }
-
 }
