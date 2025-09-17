@@ -90,11 +90,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       languageValue = value;
                       // english 0   arabic 1
                       if(value==0){
-                        context.setLocale(Locale('en'));
-                        language.changeLanguage('en');
-                      }else{
-                        context.setLocale(Locale('ar'));
-                        language.changeLanguage('ar');
+                        context.setLocale(const Locale('en'));
+                        language.changeLanguage(const Locale('en'));
+                      } else {
+                        context.setLocale(const Locale('ar'));
+                        language.changeLanguage(const Locale('ar'));
+
                       }
                     });
                   },

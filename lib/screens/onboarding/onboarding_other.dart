@@ -73,7 +73,7 @@ class _OnboardingOtherState extends State<OnboardingOther> {
                 : Alignment.bottomLeft,
           ),
           onDone: () {
-            Navigator.pushReplacementNamed(context, AppRoute.homeRouteName);
+            Navigator.pushReplacementNamed(context, AppRoute.profileRouteName);
           },
           showDoneButton: true,
           dotsDecorator: DotsDecorator(
@@ -107,7 +107,7 @@ class _OnboardingOtherState extends State<OnboardingOther> {
         style: theme.isDark()
             ? AppTheme.themeDark.textTheme.headlineSmall
             : AppTheme.themeLight.textTheme.headlineSmall,
-        textAlign: language.languageApp == 'en'
+        textAlign: language.languageApp.languageCode == 'en'
             ? TextAlign.left
             : TextAlign.right,
         maxLines: 15,
