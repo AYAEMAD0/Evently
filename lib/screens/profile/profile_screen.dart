@@ -58,9 +58,7 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Text(
               'language'.tr(),
-              style: theme.isDark()
-                  ? AppStyle.bold20WhiteDark
-                  : AppStyle.bold20Black,
+              style:Theme.of(context).textTheme.headlineMedium
             ),
             SizedBox(height: height * 0.02),
             CustomDropMenu(
@@ -79,9 +77,8 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: height * 0.04),
             Text(
               'theme'.tr(),
-              style: theme.isDark()
-                  ? AppStyle.bold20WhiteDark
-                  : AppStyle.bold20Black,
+              style:
+              Theme.of(context).textTheme.headlineMedium
             ),
             SizedBox(height: height * 0.02),
             CustomDropMenu(
@@ -123,6 +120,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: height*0.013,),
           ],
         ),
       ),
