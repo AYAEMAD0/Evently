@@ -65,8 +65,8 @@ class ProfileScreen extends StatelessWidget {
               initial: language.languageApp,
               onSelected: (value) {
                 if (value != null) {
-                  language.changeLanguage(value);
-                  context.setLocale(value as Locale);
+                  language.changeLanguage(value as Locale);
+                  context.setLocale(value);
                 }
               },
               menuList: [
