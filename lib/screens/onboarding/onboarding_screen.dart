@@ -1,4 +1,3 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/language_provider/language_provider.dart';
@@ -68,11 +67,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   languageValue = value;
                   // english 0   arabic 1
                   if (value == 0) {
-                    context.setLocale(Locale('en'));
-                    language.changeLanguage('en');
+                    context.setLocale(const Locale('en'));
+                    language.changeLanguage(const Locale('en'));
                   } else {
-                    context.setLocale(Locale('ar'));
-                    language.changeLanguage('ar');
+                    context.setLocale(const Locale('ar'));
+                    language.changeLanguage(const Locale('ar'));
                   }
                 });
               },
