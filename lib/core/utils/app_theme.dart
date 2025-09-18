@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final ThemeData themeDark = ThemeData(
     scaffoldBackgroundColor: AppColor.backgroundDarkColor,
-      textTheme: TextTheme(headlineSmall: AppStyle.bold16WhiteDark)
+      textTheme: TextTheme(headlineSmall: AppStyle.medium16WhiteDark)
   );
   static final ThemeData themeLight = ThemeData(
       scaffoldBackgroundColor: AppColor.backgroundLightColor,
-    textTheme: TextTheme(headlineSmall: AppStyle.bold16BlackLight)
+    textTheme: TextTheme(headlineSmall: AppStyle.medium16BlackLight)
   );
 }

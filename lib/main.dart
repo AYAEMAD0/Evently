@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
-import 'package:evently/screens/home/home_screen.dart';
+import 'package:evently/screens/dashboard/tabs/home/home_screen.dart';
 import 'package:evently/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

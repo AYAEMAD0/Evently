@@ -4,6 +4,7 @@ import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/language_provider/language_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
 import 'package:evently/screens/onboarding/onboarding_other.dart';
+import 'package:evently/screens/onboarding/widget/custom_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,8 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  int themeValue=0;
-  int languageValue=0;
+  int themeValue = 0;
+  int languageValue = 0;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -58,109 +59,78 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               maxLines: 10,
             ),
             SizedBox(height: height * 0.02),
-
             // language
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('language'.tr(), style: AppStyle.bold20Primary),
-                AnimatedToggleSwitch<int>.size(
-                  current: languageValue,
-                  values: const [0, 1],
-                  iconOpacity: 1,
-                  height: 40,
-                  indicatorSize: Size(width * 0.102, height * 0.050),
-                  customIconBuilder: (context, local, global) {
-                    if (local.value == 0) {
-                      return SvgPicture.asset(
-                        AppAsset.englishImage,
-                        width: 25,
-                        height: 25,
-                      );
-                    } else {
-                      return SvgPicture.asset(
-                        AppAsset.arabicImage,
-                        width: 25,
-                        height: 25,
-                      );
-                    }
-                  },
-                  onChanged: (value) {
-                    return setState(() {
-                      languageValue = value;
-                      // english 0   arabic 1
-                      if(value==0){
-                        context.setLocale(Locale('en'));
-                        language.changeLanguage('en');
-                      }else{
-                        context.setLocale(Locale('ar'));
-                        language.changeLanguage('ar');
-                      }
-                    });
-                  },
-                  borderWidth: 1,
-                  style: ToggleStyle(
-                    borderColor: AppColor.primaryColor,
-                    indicatorColor: AppColor.primaryColor,
-                    backgroundColor: AppColor.transparentColor,
-                  ),
-                ),
-              ],
+            CustomToggleSwitch(
+              current: languageValue,
+              text: 'language'.tr(),
+              onChanged: (value) async {
+                return setState(() {
+                  languageValue = value;
+                  // english 0   arabic 1
+                  if (value == 0) {
+                    context.setLocale(Locale('en'));
+                    language.changeLanguage('en');
+                  } else {
+                    context.setLocale(Locale('ar'));
+                    language.changeLanguage('ar');
+                  }
+                });
+              },
+              customIconBuilder: (context, local, global) {
+                if (local.value == 0) {
+                  return SvgPicture.asset(
+                    AppAsset.englishImage,
+                    width: 25,
+                    height: 25,
+                  );
+                } else {
+                  return SvgPicture.asset(
+                    AppAsset.arabicImage,
+                    width: 25,
+                    height: 25,
+                  );
+                }
+              },
             ),
 
             SizedBox(height: height * 0.022),
             // theme
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('theme'.tr(), style: AppStyle.bold20Primary),
-                AnimatedToggleSwitch<int>.size(
-                  current: themeValue,
-                  values: const [0, 1],
-                  iconOpacity: 1,
-                  height: 40,
-                  indicatorSize: Size(width * 0.102, height * 0.050),
-                  customIconBuilder: (context, local, global) {
-                    if (local.value == 0) {
-                      return SvgPicture.asset(
-                        AppAsset.sunLightImage,
-                        color: !(theme.isDark())
-                            ? AppColor.whiteColor
-                            : AppColor.primaryColor,
-                        width: 18,
-                        height: 18,
-                      );
+            CustomToggleSwitch(
+                current: themeValue,
+                text: 'theme'.tr(),
+                onChanged: (value) async{
+                  return setState(() {
+                    themeValue = value;
+                    // Light 0    Dark 1
+                    if (value == 0) {
+                      theme.changeTheme(ThemeMode.light);
                     } else {
-                      return SvgPicture.asset(
-                        AppAsset.moonImage,
-                        color: theme.isDark()
-                            ? AppColor.whiteColor
-                            : AppColor.primaryColor,
-                        width: 20,
-                        height: 20,
-                      );
+                      theme.changeTheme(ThemeMode.dark);
                     }
-                  },
-                  onChanged: (value) {
-                    return setState(() {
-                      themeValue = value;
-                      // Light 0    Dark 1
-                      if (value == 0) {
-                        theme.changeTheme(ThemeMode.light);
-                      } else {
-                        theme.changeTheme(ThemeMode.dark);
-                      }
-                    });
-                  },
-                  borderWidth: 1,
-                  style: ToggleStyle(
-                    borderColor: AppColor.primaryColor,
-                    indicatorColor: AppColor.primaryColor,
-                    backgroundColor: AppColor.transparentColor,
-                  ),
-                ),
-              ],
-            ),
+                  });
+                },
+              customIconBuilder: (context, local, global) {
+                if (local.value == 0) {
+                  return SvgPicture.asset(
+                    AppAsset.sunLightImage,
+                    color: !(theme.isDark())
+                        ? AppColor.whiteColor
+                        : AppColor.primaryColor,
+                    width: 18,
+                    height: 18,
+                  );
+                } else {
+                  return SvgPicture.asset(
+                    AppAsset.moonImage,
+                    color: theme.isDark()
+                        ? AppColor.whiteColor
+                        : AppColor.primaryColor,
+                    width: 20,
+                    height: 20,
+                  );
+                }
+              },),
+
             Spacer(),
             ElevatedButton(
               onPressed: () {
