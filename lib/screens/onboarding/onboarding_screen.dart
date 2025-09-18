@@ -1,4 +1,3 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/language_provider/language_provider.dart';

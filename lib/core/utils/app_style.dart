@@ -26,5 +26,27 @@ class AppStyle {
     color: AppColor.primaryColor,
     fontWeight: FontWeight.bold,
   );
+  static final TextStyle bold20BlackLight = GoogleFonts.inter(
+    fontSize: 20,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeight.bold,
+  );
+  static final TextStyle bold20WhiteDark = GoogleFonts.inter(
+    fontSize: 20,
+    color: AppColor.whiteBeigeColor,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle medium16White = GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeight.w500,
+  );
+  static final TextStyle bold24White = GoogleFonts.inter(
+    fontSize: 24,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeight.bold,
+  );
+
 
 }

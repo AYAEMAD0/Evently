@@ -3,9 +3,9 @@ import '../../../core/utils/app_color.dart';
 import '../../../core/utils/app_style.dart';
 
 class CustomDropMenu extends StatelessWidget {
-   CustomDropMenu({super.key,required this.initial, required this.onSelected, required this.menuList});
+  const CustomDropMenu({super.key,required this.initial, required this.onSelected, required this.menuList});
 
-  dynamic initial;
+  final dynamic initial;
   final void Function(Object?) onSelected;
   final List<DropdownMenuEntry<Object>> menuList;
   @override
