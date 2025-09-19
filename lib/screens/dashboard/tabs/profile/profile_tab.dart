@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:evently/core/utils/app_asset.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/screens/dashboard/tabs/profile/widget/image_and_name_and_email.dart';

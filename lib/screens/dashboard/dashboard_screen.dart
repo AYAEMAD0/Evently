@@ -1,6 +1,4 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/screens/dashboard/tabs/favourite/favourite_tab.dart';
 import 'package:evently/screens/dashboard/tabs/home/home_tab.dart';
 import 'package:evently/screens/dashboard/tabs/map/map_tab.dart';

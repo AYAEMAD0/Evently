@@ -9,11 +9,12 @@ class AppTheme {
     cardColor: AppColor.backgroundLightColor,
     colorScheme: ColorScheme.light(
       secondary: AppColor.backgroundLightColor,
-        primary: AppColor.primaryColor
+      primary: AppColor.primaryColor,
+      surface: AppColor.backgroundLightColor,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColor.primaryColor,
-      foregroundColor: AppColor.backgroundLightColor
+      foregroundColor: AppColor.backgroundLightColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColor.primaryColor,
@@ -28,21 +29,23 @@ class AppTheme {
       bodySmall: AppStyle.regular16WhiteLight,
       bodyMedium: AppStyle.bold18PrimaryLight,
       bodyLarge: AppStyle.medium16WhiteLight,
-      labelSmall: AppStyle.medium16Primary
+      labelSmall: AppStyle.medium16Primary,
+      labelMedium: AppStyle.bold18BlackLight,
     ),
   );
 
   static final ThemeData themeDark = ThemeData(
     scaffoldBackgroundColor: AppColor.backgroundDarkColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: AppColor.backgroundDarkColor,
+      backgroundColor: AppColor.backgroundDarkColor,
       foregroundColor: AppColor.whiteBeigeColor,
     ),
     canvasColor: AppColor.backgroundDarkColor,
     cardColor: AppColor.whiteBeigeColor,
     colorScheme: ColorScheme.dark(
       secondary: AppColor.primaryColor,
-      primary: AppColor.whiteBeigeColor
+      primary: AppColor.whiteBeigeColor,
+      surface: AppColor.backgroundDarkColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColor.backgroundDarkColor,
@@ -56,8 +59,9 @@ class AppTheme {
       headlineLarge: AppStyle.bold24WhiteDark,
       bodySmall: AppStyle.regular16WhiteDark,
       bodyMedium: AppStyle.bold18BlackDark,
-        bodyLarge: AppStyle.medium16WhiteDark,
-        labelSmall: AppStyle.medium16WhiteDark
+      bodyLarge: AppStyle.medium16WhiteDark,
+      labelSmall: AppStyle.medium16WhiteDark,
+      labelMedium: AppStyle.bold18WhiteDark,
     ),
   );
 }

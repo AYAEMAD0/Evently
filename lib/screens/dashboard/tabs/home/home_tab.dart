@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
-import 'package:evently/screens/dashboard/tabs/home/widget/event_item.dart';
+import 'package:evently/model/event_item_model.dart';
+import 'package:evently/screens/dashboard/tabs/home/widget/event_category.dart';
 import 'package:evently/screens/dashboard/tabs/home/widget/welcome_and_name_theme_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+
+import 'widget/event_item.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -15,7 +18,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
 
-  List eventNameList = [
+  List eventCategoryList = [
     "all".tr(),
     "sport".tr(),
     "birthday".tr(),
@@ -41,6 +44,8 @@ class _HomeTabState extends State<HomeTab> {
     FontAwesome.umbrella_beach_solid,
   ];
 
+  List<EventItemModel> model = EventItemModel.eventItem;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -49,13 +54,16 @@ class _HomeTabState extends State<HomeTab> {
       child: Column(
         children: [
           Container(
-            height: height * 0.27,
+            height: height * 0.26,
             padding: EdgeInsets.symmetric(
               vertical: height * 0.02,
               horizontal: width * 0.025,
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,
+              border: Border(
+                bottom: BorderSide(color: AppColor.primaryColor, width: 2),
+              ),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(24),
                 bottomRight: Radius.circular(24),
@@ -80,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
                 DefaultTabController(
-                  length: eventNameList.length,
+                  length: eventCategoryList.length,
                   child: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
@@ -94,16 +102,30 @@ class _HomeTabState extends State<HomeTab> {
                       setState(() {});
                     },
                     tabs: List.generate(
-                      eventNameList.length,
-                      (index) => EventItem(
+                      eventCategoryList.length,
+                      (index) => EventCategory(
                         selected: index == selectedIndex,
-                        eventName: eventNameList[index],
-                        icon: eventIconList[index]
+                        eventName: eventCategoryList[index],
+                        icon: eventIconList[index],
                       ),
                     ),
                   ),
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.only(top: height*0.019),
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: height * 0.019),
+              itemCount: model.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: width*0.025),
+                  child: EventItem(model: model[index]),
+                );
+              },
             ),
           ),
         ],

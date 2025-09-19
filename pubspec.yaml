@@ -70,6 +70,8 @@ flutter:
   assets:
     - assets/images/svgs/
     - assets/images/pngs/
+    - assets/images/pngs/light/
+    - assets/images/pngs/dark/
     - assets/translations/
 
 

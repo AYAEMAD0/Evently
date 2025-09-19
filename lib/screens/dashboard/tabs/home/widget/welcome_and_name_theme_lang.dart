@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/provider/theme_provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../../../../core/utils/app_asset.dart';
 
 class WelcomeAndNameThemeLang extends StatelessWidget {
@@ -10,6 +12,7 @@ class WelcomeAndNameThemeLang extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    var theme=Provider.of<ThemeProvider>(context);
     return  Row(
       children: [
         Column(
@@ -27,10 +30,21 @@ class WelcomeAndNameThemeLang extends StatelessWidget {
           ],
         ),
         Spacer(),
-        SvgPicture.asset(
-          AppAsset.sunLightImage,
-          color: Theme.of(context).cardColor,
-          height: 28,
+        InkWell(
+          onTap: (){
+            if(theme.themeApp==ThemeMode.light){
+            theme.changeTheme(ThemeMode.dark);
+            }
+            else{
+              theme.changeTheme(ThemeMode.light);
+            }
+          },
+          child: SvgPicture.asset(
+            theme.isDark()?
+            AppAsset.sunLightImage: AppAsset.moonImage,
+            color: Theme.of(context).cardColor,
+            height: 28,
+          ),
         ),
         Container(
           margin: EdgeInsetsDirectional.only(start: width * 0.03),
