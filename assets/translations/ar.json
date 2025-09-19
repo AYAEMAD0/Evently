@@ -14,7 +14,24 @@
   "arabic": "العربية",
   "dark": "داكن",
   "light": "فاتح",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "home_tab": "الرئيسية",
+  "map_tab": "الخريطة",
+  "love_tab": "المفضلة",
+  "profile_tab": "الملف الشخصي",
+  "welcome": "مرحبًا بعودتك ✨",
+  "all": "الكل",
+  "sport": "رياضة",
+  "birthday": "عيد ميلاد",
+  "meeting": "اجتماع",
+  "gaming": "ألعاب",
+  "workshop": "ورشة عمل",
+  "exhibition": "معرض",
+  "book_club": "نادي الكتاب",
+  "eating": "تناول الطعام",
+  "holiday": "عطلة"
+
+
 
 
 }

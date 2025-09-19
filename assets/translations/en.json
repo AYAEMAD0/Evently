@@ -14,5 +14,20 @@
   "arabic": "Arabic",
   "dark": "Dark",
   "light": "Light",
-  "logout": "Logout"
+  "logout": "Logout",
+  "home_tab": "Home",
+  "map_tab": "Map",
+  "love_tab": "Love",
+  "profile_tab": "Profile",
+  "welcome":"Welcome Back ✨",
+  "all": "All",
+  "sport": "Sport",
+  "birthday": "Birthday",
+  "meeting": "Meeting",
+  "gaming": "Gaming",
+  "workshop": "Workshop",
+  "exhibition": "Exhibition",
+  "book_club": "Book Club",
+  "eating": "Eating",
+  "holiday": "Holiday"
 }

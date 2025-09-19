@@ -24,7 +24,7 @@ class CustomToggleSwitch extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(text, style: AppStyle.bold20Primary),
+        Text(text, style: AppStyle.bold20PrimaryLight),
         AnimatedToggleSwitch<int>.size(
           current: current,
           values: const [0, 1],

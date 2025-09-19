@@ -2,14 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_asset.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
-import 'package:evently/screens/profile/widget/custom_drop_menu.dart';
+import 'package:evently/screens/dashboard/tabs/profile/widget/image_and_name_and_email.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider/language_provider/language_provider.dart';
-import '../../provider/theme_provider/theme_provider.dart';
+import '../../../../provider/language_provider/language_provider.dart';
+import '../../../../provider/theme_provider/theme_provider.dart';
+import 'widget/custom_drop_menu.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,29 +25,7 @@ class ProfileScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
         ),
-        title: Row(
-          children: [
-            Image.asset(
-              AppAsset.routeImage,
-              height: height * 0.25,
-              width: width * 0.35,
-            ),
-            SizedBox(width: width * 0.07),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('John Safwat', style: AppStyle.bold24White),
-                  Text(
-                    'johnsafwat.route@gmail.com',
-                    style: AppStyle.medium16White,
-                    maxLines: 2,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        title: ImageAndNameAndEmail(),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -58,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Text(
               'language'.tr(),
-              style:Theme.of(context).textTheme.headlineMedium
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
             CustomDropMenu(
@@ -70,15 +49,22 @@ class ProfileScreen extends StatelessWidget {
                 }
               },
               menuList: [
-                DropdownMenuEntry(value: Locale('en'), label: 'english'.tr()),
-                DropdownMenuEntry(value: Locale('ar'), label: 'arabic'.tr()),
+                DropdownMenuEntry(
+                  value: Locale('en'),
+                  label: 'english'.tr(),
+                  style: builtStyleBtn(),
+                ),
+                DropdownMenuEntry(
+                  value: Locale('ar'),
+                  label: 'arabic'.tr(),
+                  style: builtStyleBtn(),
+                ),
               ],
             ),
             SizedBox(height: height * 0.04),
             Text(
               'theme'.tr(),
-              style:
-              Theme.of(context).textTheme.headlineMedium
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
             CustomDropMenu(
@@ -90,8 +76,16 @@ class ProfileScreen extends StatelessWidget {
                 }
               },
               menuList: [
-                DropdownMenuEntry(value: ThemeMode.light, label: 'light'.tr()),
-                DropdownMenuEntry(value: ThemeMode.dark, label: 'dark'.tr()),
+                DropdownMenuEntry(
+                  value: ThemeMode.light,
+                  label: 'light'.tr(),
+                  style: builtStyleBtn(),
+                ),
+                DropdownMenuEntry(
+                  value: ThemeMode.dark,
+                  label: 'dark'.tr(),
+                  style: builtStyleBtn(),
+                ),
               ],
             ),
 
@@ -102,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColor.redColor,
-                padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                padding: EdgeInsets.symmetric(vertical: height * 0.01),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -120,10 +114,16 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: height*0.013,),
+            SizedBox(height: height * 0.023),
           ],
         ),
       ),
+    );
+  }
+
+  ButtonStyle builtStyleBtn() {
+    return ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(AppColor.blackColor),
     );
   }
 }

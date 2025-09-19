@@ -1,6 +1,6 @@
+import 'package:evently/core/utils/app_style.dart';
 import 'package:flutter/material.dart';
-import '../../../core/utils/app_color.dart';
-import '../../../core/utils/app_style.dart';
+import '../../../../../core/utils/app_color.dart';
 
 class CustomDropMenu extends StatelessWidget {
   const CustomDropMenu({super.key,required this.initial, required this.onSelected, required this.menuList});
@@ -14,7 +14,7 @@ class CustomDropMenu extends StatelessWidget {
     return DropdownMenu(
       width: double.infinity,
       initialSelection: initial,
-      textStyle: AppStyle.bold20Primary,
+      textStyle: AppStyle.bold20PrimaryLight,
       trailingIcon: Icon(
         Icons.arrow_drop_down,
         color: AppColor.primaryColor,

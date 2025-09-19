@@ -45,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Image.asset(AppAsset.onboardingImage1),
             Text(
               "title1".tr(),
-              style: AppStyle.bold20Primary,
+              style: AppStyle.bold20PrimaryLight,
               textAlign: TextAlign.start,
             ),
             SizedBox(height: height * 0.02),
