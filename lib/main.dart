@@ -2,9 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
-import 'package:evently/screens/dashboard/tabs/home/home_screen.dart';
+import 'package:evently/screens/dashboard/dashboard_screen.dart';
 import 'package:evently/screens/onboarding/onboarding_screen.dart';
-import 'package:evently/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'provider/language_provider/language_provider.dart';
@@ -39,8 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         AppRoute.onBoardingRouteName: (context) => OnboardingScreen(),
-        AppRoute.homeRouteName: (context) => HomeScreen(),
-        AppRoute.profileRouteName:(context)=>ProfileScreen()
+        AppRoute.dashBoardRouteName: (context) => DashboardScreen(),
       },
       initialRoute: AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,
