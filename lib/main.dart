@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
+import 'package:evently/screens/auth/forget_password_screen.dart';
+import 'package:evently/screens/auth/login_screen.dart';
+import 'package:evently/screens/auth/signup_screen.dart';
 import 'package:evently/screens/dashboard/dashboard_screen.dart';
 import 'package:evently/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +42,9 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoute.onBoardingRouteName: (context) => OnboardingScreen(),
         AppRoute.dashBoardRouteName: (context) => DashboardScreen(),
+        AppRoute.loginRouteName: (context) => LoginScreen(),
+        AppRoute.signupRouteName: (context) => SignupScreen(),
+        AppRoute.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
       },
       initialRoute: AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,
