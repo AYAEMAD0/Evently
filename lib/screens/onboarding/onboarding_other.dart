@@ -73,7 +73,7 @@ class _OnboardingOtherState extends State<OnboardingOther> {
                 : Alignment.bottomLeft,
           ),
           onDone: () {
-            Navigator.pushReplacementNamed(context, AppRoute.dashBoardRouteName);
+            Navigator.pushReplacementNamed(context, AppRoute.loginRouteName);
           },
           showDoneButton: true,
           dotsDecorator: DotsDecorator(

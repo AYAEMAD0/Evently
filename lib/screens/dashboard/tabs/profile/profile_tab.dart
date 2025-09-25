@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
+import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/screens/dashboard/tabs/profile/widget/image_and_name_and_email.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,13 +33,14 @@ class ProfileTab extends StatelessWidget {
           horizontal: width * 0.05,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'language'.tr(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
+            //language
             CustomDropMenu(
               initial: language.languageApp,
               onSelected: (value) {
@@ -66,6 +68,7 @@ class ProfileTab extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
+            //theme
             CustomDropMenu(
               key: ValueKey(context.locale), // يربط إعادة البناء بالـ Locale
               initial: theme.themeApp,
@@ -87,31 +90,21 @@ class ProfileTab extends StatelessWidget {
                 ),
               ],
             ),
-
             Spacer(),
-            ElevatedButton(
+            CustomButton(
               onPressed: () {
                 //todo logout button
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColor.redColor,
-                padding: EdgeInsets.symmetric(vertical: height * 0.01),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+              backgroundColor: AppColor.redColor,
+              text: 'logout'.tr(),
+              mainAxisAlignment: MainAxisAlignment.start,
+              isIcon: true,
+              iconName: Icon(
+                Icons.logout_rounded,
+                color: AppColor.whiteColor,
+                size: 30,
               ),
-              child: Row(
-                spacing: width * 0.03,
-                children: [
-                  SizedBox(width: width * 0.01),
-                  Icon(
-                    Icons.logout_rounded,
-                    color: AppColor.whiteColor,
-                    size: 30,
-                  ),
-                  Text('logout'.tr(), style: AppStyle.medium20White),
-                ],
-              ),
+              styleText: AppStyle.medium20White,
             ),
             SizedBox(height: height * 0.023),
           ],

@@ -8,6 +8,11 @@ class AppStyle {
     color: AppColor.blackColor,
     fontWeight: FontWeight.w500,
   ) ;
+  static final TextStyle medium16Gray = GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.grayColor,
+    fontWeight: FontWeight.w500,
+  );
 
   static final TextStyle medium16WhiteDark = GoogleFonts.inter(
     fontSize: 16,
@@ -25,6 +30,11 @@ class AppStyle {
     fontWeight: FontWeight.w500,
   );
 
+  static final TextStyle medium20Primary= GoogleFonts.inter(
+    fontSize: 20,
+    color: AppColor.primaryColor,
+    fontWeight: FontWeight.w500,
+  );
 
   static final TextStyle medium20White= GoogleFonts.inter(
     fontSize: 24,
@@ -38,11 +48,6 @@ class AppStyle {
     fontWeight: FontWeight.bold,
   );
   static final TextStyle bold18PrimaryLight = GoogleFonts.inter(
-    fontSize: 18,
-    color: AppColor.primaryColor,
-    fontWeight: FontWeight.bold,
-  );
-  static final TextStyle bold16PrimaryLight = GoogleFonts.inter(
     fontSize: 18,
     color: AppColor.primaryColor,
     fontWeight: FontWeight.bold,
@@ -91,7 +96,7 @@ class AppStyle {
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle  bold18BlackLight = GoogleFonts.inter(
+  static final TextStyle bold18BlackLight = GoogleFonts.inter(
     fontSize: 18,
     color: AppColor.blackColor,
     fontWeight: FontWeight.bold,
@@ -100,5 +105,10 @@ class AppStyle {
     fontSize: 18,
     color: AppColor.whiteBeigeColor,
     fontWeight: FontWeight.bold,
+  );
+  static final TextStyle bold16Primary = GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.primaryColor,
+    fontWeight: FontWeight.w700,
   );
 }

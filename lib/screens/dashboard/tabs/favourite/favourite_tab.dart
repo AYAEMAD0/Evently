@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/utils/app_style.dart';
 import '../../../../model/event_item_model.dart';
 import '../home/widget/event_item.dart';
 
@@ -31,6 +33,12 @@ class _FavouriteTabState extends State<FavouriteTab> {
             CustomTextField(
               hint: "search_for_event".tr(),
               controller: searchController,
+              textStyle: Theme.of(context).textTheme.headlineSmall!,
+              hintStyle: AppStyle.bold18PrimaryLight,
+              borderColor: AppColor.primaryColor,
+              prefixIconColor: AppColor.primaryColor,
+              prefixIcon: Icon(Icons.search),
+              fillColor: AppColor.transparentColor,
             ),
             Expanded(
               child: ListView.separated(

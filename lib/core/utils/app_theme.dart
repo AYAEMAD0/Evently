@@ -5,12 +5,18 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final ThemeData themeLight = ThemeData(
     scaffoldBackgroundColor: AppColor.backgroundLightColor,
+    appBarTheme: AppBarTheme(
+        iconTheme: IconThemeData(color: AppColor.primaryColor),
+      scrolledUnderElevation: 0,elevation: 0
+    ),
     canvasColor: AppColor.primaryColor,
     cardColor: AppColor.backgroundLightColor,
     colorScheme: ColorScheme.light(
       secondary: AppColor.backgroundLightColor,
       primary: AppColor.primaryColor,
       surface: AppColor.backgroundLightColor,
+      outline:  AppColor.grayColor,
+      outlineVariant: AppColor.grayColor
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColor.primaryColor,
@@ -31,11 +37,17 @@ class AppTheme {
       bodyLarge: AppStyle.medium16WhiteLight,
       labelSmall: AppStyle.medium16Primary,
       labelMedium: AppStyle.bold18BlackLight,
+      labelLarge: AppStyle.medium16Gray
     ),
   );
 
   static final ThemeData themeDark = ThemeData(
     scaffoldBackgroundColor: AppColor.backgroundDarkColor,
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: AppColor.primaryColor),
+        scrolledUnderElevation: 0,
+        elevation: 0,
+    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColor.backgroundDarkColor,
       foregroundColor: AppColor.whiteBeigeColor,
@@ -46,6 +58,9 @@ class AppTheme {
       secondary: AppColor.primaryColor,
       primary: AppColor.whiteBeigeColor,
       surface: AppColor.backgroundDarkColor,
+      outline:  AppColor.primaryColor,
+      outlineVariant: AppColor.whiteBeigeColor
+
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColor.backgroundDarkColor,
@@ -62,6 +77,7 @@ class AppTheme {
       bodyLarge: AppStyle.medium16WhiteDark,
       labelSmall: AppStyle.medium16WhiteDark,
       labelMedium: AppStyle.bold18WhiteDark,
+      labelLarge: AppStyle.medium16WhiteDark
     ),
   );
 }
