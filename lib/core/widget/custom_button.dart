@@ -13,9 +13,11 @@ class CustomButton extends StatelessWidget {
     this.mainAxisAlignment,
     this.borderColor,
     this.paddingHeight,
+    this.foregroundColor,
   });
   final void Function() onPressed;
   final Color backgroundColor;
+  final Color? foregroundColor;
   final Color? borderColor;
   final bool isIcon;
   final MainAxisAlignment? mainAxisAlignment;
@@ -23,6 +25,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle styleText;
   final Widget? iconName;
   final double? paddingHeight;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,9 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
+        foregroundColor:foregroundColor ,
         elevation: 0,
-        padding: EdgeInsets.symmetric(vertical:paddingHeight?? height*0.015),
+        padding: EdgeInsets.symmetric(vertical:paddingHeight?? height*0.015,horizontal: width * 0.03 ),
         side:BorderSide(color: borderColor??AppColor.transparentColor,width: 1.5) ,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),

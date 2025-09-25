@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   final String? obscureCharacter;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.textStyle,
     required this.hint,
     required this.hintStyle,
@@ -41,7 +41,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIconColor,
     this.obscure=false,
     this.obscureCharacter,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class CustomTextField extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       borderSide: BorderSide(
         color: colorBorder ,
-        width: 1.3,
+        width: 1.1,
       ),
     );
   }

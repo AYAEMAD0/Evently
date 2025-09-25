@@ -7,32 +7,26 @@ import '../../provider/language_provider/language_provider.dart';
 import '../../screens/onboarding/widget/custom_toggle_switch.dart';
 import '../utils/app_asset.dart';
 
-class CustomToggleLanguage extends StatefulWidget {
-  const CustomToggleLanguage({super.key});
+class CustomToggleLanguage extends StatelessWidget {
+  const CustomToggleLanguage({super.key, this.text});
+  final String? text;
 
-  @override
-  State<CustomToggleLanguage> createState() => _CustomToggleLanguageState();
-}
-
-class _CustomToggleLanguageState extends State<CustomToggleLanguage> {
-  int languageValue = 0;
   @override
   Widget build(BuildContext context) {
     var language = Provider.of<LanguageProvider>(context);
     return CustomToggleSwitch(
-      current: languageValue,
-      onChanged: (value) async {
-        return setState(() {
-          languageValue = value;
-          // english 0   arabic 1
-          if (value == 0) {
-            context.setLocale(const Locale('en'));
-            language.changeLanguage(const Locale('en'));
-          } else {
-            context.setLocale(const Locale('ar'));
-            language.changeLanguage(const Locale('ar'));
-          }
-        });
+      // english 0, arabic 1
+      current: language.isEnglishLanguage()?0:1,
+      text: text,
+      onChanged: (value)  {
+        // english 0   arabic 1
+        if (value == 0) {
+          context.setLocale(const Locale('en'));
+          language.changeLanguage(const Locale('en'));
+        } else {
+          context.setLocale(const Locale('ar'));
+          language.changeLanguage(const Locale('ar'));
+        }
       },
       customIconBuilder: (context, local, global) {
         if (local.value == 0) {

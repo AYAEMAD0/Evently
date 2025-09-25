@@ -40,6 +40,7 @@ class ProfileTab extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
+            //language
             CustomDropMenu(
               initial: language.languageApp,
               onSelected: (value) {
@@ -67,6 +68,7 @@ class ProfileTab extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: height * 0.02),
+            //theme
             CustomDropMenu(
               key: ValueKey(context.locale), // يربط إعادة البناء بالـ Locale
               initial: theme.themeApp,

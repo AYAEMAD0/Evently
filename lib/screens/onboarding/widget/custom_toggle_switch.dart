@@ -14,7 +14,7 @@ class CustomToggleSwitch extends StatelessWidget {
   });
   final int current;
   final String? text;
-  final Future<void> Function(int) onChanged;
+  final void Function(int) onChanged;
   final Widget Function(
     BuildContext,
     AnimatedToggleProperties<int>,
@@ -31,11 +31,11 @@ class CustomToggleSwitch extends StatelessWidget {
             current: current,
             values: const [0, 1],
             iconOpacity: 1,
-            height: 40,
+            height: 42,
             indicatorSize: Size(width * 0.102, height * 0.050),
             customIconBuilder: customIconBuilder,
             onChanged: onChanged,
-            borderWidth: 1,
+            borderWidth: 3,
             style: ToggleStyle(
               borderColor: AppColor.primaryColor,
               indicatorColor: AppColor.primaryColor,
@@ -50,11 +50,11 @@ class CustomToggleSwitch extends StatelessWidget {
                 current: current,
                 values: const [0, 1],
                 iconOpacity: 1,
-                height: 40,
+                height: 42,
                 indicatorSize: Size(width * 0.102, height * 0.050),
                 customIconBuilder: customIconBuilder,
                 onChanged: onChanged,
-                borderWidth: 1.5,
+                borderWidth: 3,
                 style: ToggleStyle(
                   borderColor: AppColor.primaryColor,
                   indicatorColor: AppColor.primaryColor,

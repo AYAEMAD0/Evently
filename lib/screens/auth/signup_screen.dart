@@ -53,8 +53,8 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(AppAsset.logoAuthImage, height: 0.2 * height),
-                  SizedBox(height: 0.02 * height),
+                  Image.asset(AppAsset.logoAuthImage, height: 0.19 * height),
+                  SizedBox(height: 0.03 * height),
                   CustomTextField(
                     textStyle: Theme.of(context).textTheme.labelLarge!,
                     hint: "name".tr(),

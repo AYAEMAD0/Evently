@@ -37,13 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.040 * width),
+            padding: EdgeInsets.symmetric(horizontal: 0.040 * width,vertical: height*0.02),
             child: Form(
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(AppAsset.logoAuthImage, height: 0.22 * height),
+                  Image.asset(AppAsset.logoAuthImage, height: 0.19 * height),
                   SizedBox(height: 0.02 * height),
                   CustomTextField(
                     textStyle: Theme.of(context).textTheme.labelLarge!,
@@ -114,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 0.03 * height),
                   CustomButton(
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, AppRoute.dashBoardRouteName);
                       //todo login with google
                     },
                     backgroundColor: AppColor.transparentColor,
