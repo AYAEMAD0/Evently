@@ -23,7 +23,13 @@ class ProfileTab extends StatelessWidget {
         backgroundColor: AppColor.primaryColor,
         toolbarHeight: height * 0.23,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
+          borderRadius: language.isEnglishLanguage()
+              ? const BorderRadius.only(
+            bottomLeft: Radius.circular(80),
+          )
+              : const BorderRadius.only(
+            bottomRight: Radius.circular(80),
+          ),
         ),
         title: ImageAndNameAndEmail(),
       ),
@@ -96,15 +102,17 @@ class ProfileTab extends StatelessWidget {
                 //todo logout button
               },
               backgroundColor: AppColor.redColor,
-              text: 'logout'.tr(),
-              mainAxisAlignment: MainAxisAlignment.start,
               isIcon: true,
-              iconName: Icon(
-                Icons.logout_rounded,
-                color: AppColor.whiteColor,
-                size: 30,
-              ),
-              styleText: AppStyle.medium20White,
+              iconWidget: Row(children: [
+                Icon(
+                  Icons.logout_rounded,
+                  color: AppColor.whiteColor,
+                  size: 30,
+                ),
+                SizedBox(width: width*0.02,),
+                Text('logout'.tr(), style: AppStyle.medium20White,)
+              ],),
+
             ),
             SizedBox(height: height * 0.023),
           ],

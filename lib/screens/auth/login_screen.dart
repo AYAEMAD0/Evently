@@ -21,7 +21,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState>formKey=GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -37,7 +38,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.040 * width,vertical: height*0.02),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.040 * width,
+              vertical: height * 0.02,
+            ),
             child: Form(
               key: formKey,
               child: Column(
@@ -49,26 +53,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     textStyle: Theme.of(context).textTheme.labelLarge!,
                     hint: "email".tr(),
                     controller: emailController,
-                    validator: (text)=>ValidatorHelper.validateEmail(text),
+                    validator: (text) => ValidatorHelper.validateEmail(text),
                     hintStyle: Theme.of(context).textTheme.labelLarge!,
                     borderColor: Theme.of(context).colorScheme.outline,
                     fillColor: AppColor.transparentColor,
                     prefixIcon: Icon(Icons.email),
-                    prefixIconColor: Theme.of(context).colorScheme.outlineVariant,
+                    prefixIconColor: Theme.of(
+                      context,
+                    ).colorScheme.outlineVariant,
                   ),
                   SizedBox(height: 0.03 * height),
                   CustomTextField(
                     textStyle: Theme.of(context).textTheme.labelLarge!,
                     hint: "password".tr(),
                     controller: passwordController,
-                    validator: (text)=>ValidatorHelper.validatePassword(text),
+                    validator: (text) => ValidatorHelper.validatePassword(text),
                     hintStyle: Theme.of(context).textTheme.labelLarge!,
                     borderColor: Theme.of(context).colorScheme.outline,
                     fillColor: AppColor.transparentColor,
                     prefixIcon: Icon(Icons.lock),
-                    prefixIconColor: Theme.of(context).colorScheme.outlineVariant,
+                    prefixIconColor: Theme.of(
+                      context,
+                    ).colorScheme.outlineVariant,
                     suffixIcon: Icon(Icons.visibility_off_sharp),
-                    suffixIconColor: Theme.of(context).colorScheme.outlineVariant,
+                    suffixIconColor: Theme.of(
+                      context,
+                    ).colorScheme.outlineVariant,
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -92,8 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 0.024 * height),
                   CustomButton(
                     onPressed: () {
-                      if(formKey.currentState!.validate()){
-                      }
+                      if (formKey.currentState!.validate()) {}
                       //todo logic login
                     },
                     backgroundColor: AppColor.primaryColor,
@@ -114,16 +123,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 0.03 * height),
                   CustomButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, AppRoute.dashBoardRouteName);
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoute.dashBoardRouteName,
+                      );
                       //todo login with google
                     },
                     backgroundColor: AppColor.transparentColor,
-                    text: 'login_with_google'.tr(),
                     borderColor: AppColor.primaryColor,
                     paddingHeight: height * 0.019,
                     isIcon: true,
-                    iconName: SvgPicture.asset(AppAsset.googleImage),
-                    styleText: AppStyle.medium20Primary,
+                    iconWidget: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppAsset.googleImage),
+                        SizedBox(width: width*0.02,),
+                        Text(
+                          'login_with_google'.tr(),
+                          style: AppStyle.medium20Primary,
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 0.03 * height),
                   Align(

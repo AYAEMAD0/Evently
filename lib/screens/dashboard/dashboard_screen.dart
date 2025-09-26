@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/screens/dashboard/tabs/favourite/favourite_tab.dart';
 import 'package:evently/screens/dashboard/tabs/home/home_tab.dart';
 import 'package:evently/screens/dashboard/tabs/map/map_tab.dart';
@@ -70,7 +71,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoute.addEventRouteName);
+        },
         shape: StadiumBorder(
            side: BorderSide(color: Theme.of(context).cardColor, width: 3),
         ),
