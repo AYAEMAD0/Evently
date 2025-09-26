@@ -1,0 +1,94 @@
+import 'package:evently/core/utils/app_color.dart';
+import 'package:flutter/material.dart';
+
+class CustomTextField extends StatelessWidget {
+  final TextStyle textStyle;
+  final String hint;
+  final TextStyle hintStyle;
+  final String? label;
+  final TextStyle? labelStyle;
+
+  final Widget? prefixIcon;
+  final Color? prefixIconColor;
+  final Widget? suffixIcon;
+  final Color? suffixIconColor;
+  final Color fillColor;
+
+  final Color borderColor;
+  final int maxLines;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboard;
+  final bool? obscure;
+  final String? obscureCharacter;
+
+  const CustomTextField({
+    super.key,
+    required this.textStyle,
+    required this.hint,
+    required this.hintStyle,
+    required this.controller,
+    required this.borderColor,
+    required this.fillColor,
+    this.validator,
+    this.maxLines = 1,
+    this.keyboard,
+    this.label,
+    this.labelStyle,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.suffixIconColor,
+    this.prefixIconColor,
+    this.obscure=false,
+    this.obscureCharacter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return TextFormField(
+      style: textStyle,
+      controller: controller,
+      validator: validator,
+      autofocus: false,
+      obscureText: obscure!,
+      obscuringCharacter:obscureCharacter??"*" ,
+      maxLines: maxLines,
+      cursorColor: AppColor.primaryColor,
+      cursorHeight: height * 0.025,
+      cursorWidth: width * 0.006,
+      keyboardType: keyboard ?? TextInputType.text,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: hintStyle,
+        labelText: label,
+        labelStyle: labelStyle,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: width * 0.05,
+          vertical: height * 0.025,
+        ),
+        enabledBorder: builtBorder(borderColor),
+        focusedBorder: builtBorder(borderColor),
+        errorBorder: builtBorder(),
+        focusedErrorBorder: builtBorder(),
+        prefixIcon: prefixIcon,
+        prefixIconColor: prefixIconColor,
+        suffixIcon: suffixIcon,
+        suffixIconColor: suffixIconColor,
+        filled: true,
+        fillColor: fillColor,
+      ),
+    );
+  }
+
+  OutlineInputBorder builtBorder([Color colorBorder=AppColor.redColor]) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide(
+        color: colorBorder ,
+        width: 1.1,
+      ),
+    );
+  }
+}
