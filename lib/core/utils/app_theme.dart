@@ -16,7 +16,10 @@ class AppTheme {
       primary: AppColor.primaryColor,
       surface: AppColor.backgroundLightColor,
       outline:  AppColor.grayColor,
-      outlineVariant: AppColor.grayColor
+      outlineVariant: AppColor.grayColor,
+      onPrimary: AppColor.backgroundLightColor,
+      onTertiary:AppColor.blackColor ,
+      onSecondary:AppColor.backgroundLightColor
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColor.primaryColor,
@@ -37,7 +40,9 @@ class AppTheme {
       bodyLarge: AppStyle.medium16WhiteLight,
       labelSmall: AppStyle.medium16Primary,
       labelMedium: AppStyle.bold18BlackLight,
-      labelLarge: AppStyle.medium16Gray
+      labelLarge: AppStyle.medium16Gray,
+      displayLarge: AppStyle.bold16White,
+      displayMedium:AppStyle.bold20BackgroundLight,
     ),
   );
 
@@ -59,7 +64,10 @@ class AppTheme {
       primary: AppColor.whiteBeigeColor,
       surface: AppColor.backgroundDarkColor,
       outline:  AppColor.primaryColor,
-      outlineVariant: AppColor.whiteBeigeColor
+      outlineVariant: AppColor.whiteBeigeColor,
+      onPrimary: AppColor.backgroundDarkColor,
+      onTertiary: AppColor.whiteBeigeColor,
+      onSecondary:AppColor.whiteBeigeColor,
 
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -77,7 +85,9 @@ class AppTheme {
       bodyLarge: AppStyle.medium16WhiteDark,
       labelSmall: AppStyle.medium16WhiteDark,
       labelMedium: AppStyle.bold18WhiteDark,
-      labelLarge: AppStyle.medium16WhiteDark
+      labelLarge: AppStyle.medium16WhiteDark,
+      displayLarge: AppStyle.bold16Black,
+      displayMedium: AppStyle.bold20WhiteBeigeDark
     ),
   );
 }

@@ -7,8 +7,20 @@ class EventCategory extends StatelessWidget {
     required this.selected,
     required this.eventName,
     required this.icon,
+    required this.colorBorderIsSelected,
+    required this.styleTextSelected,
+    required this.styleTextNotSelected,
+    required this.colorIconSelected,
+    required this.colorIconNotSelected,
+    required this.colorBackgroundIsSelected,
   });
   final bool selected;
+  final Color colorBorderIsSelected;
+  final Color colorBackgroundIsSelected;
+  final Color colorIconSelected;
+  final Color colorIconNotSelected;
+  final TextStyle styleTextSelected;
+  final TextStyle styleTextNotSelected;
   final String eventName;
   final IconData icon;
   @override
@@ -22,22 +34,23 @@ class EventCategory extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: selected
-            ? Theme.of(context).colorScheme.secondary
+            ? colorBackgroundIsSelected
             : AppColor.transparentColor,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: Theme.of(context).colorScheme.secondary,width: 1.5),
+        border: Border.all(color: colorBorderIsSelected ,width: 1.5),
       ),
       child: Row(
         spacing: width * 0.03,
         children: [
           Icon(icon,color: selected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).cardColor,),
+              ? colorIconSelected
+              :colorIconNotSelected
+          ),
           Text(
             eventName,
             style: selected
-                ? Theme.of(context).textTheme.labelSmall
-                : Theme.of(context).textTheme.bodyLarge,
+                ? styleTextSelected
+                : styleTextNotSelected,
           ),
         ],
       ),

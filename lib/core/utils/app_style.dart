@@ -111,4 +111,29 @@ class AppStyle {
     color: AppColor.primaryColor,
     fontWeight: FontWeight.w700,
   );
+  static final TextStyle bold16White = GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.backgroundLightColor,
+    fontWeight: FontWeight.w700,
+  );
+  static final TextStyle bold16Black = GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.backgroundDarkColor,
+    fontWeight: FontWeight.w700,
+  );
+  static final TextStyle bold20BackgroundLight = GoogleFonts.inter(
+    fontSize: 20,
+    color: AppColor.backgroundLightColor,
+    fontWeight: FontWeight.w600,
+  );
+  static final TextStyle bold20WhiteBeigeDark = GoogleFonts.inter(
+    fontSize: 20,
+    color: AppColor.whiteBeigeColor,
+    fontWeight: FontWeight.w600,
+  );
+  static final TextStyle regular16Red= GoogleFonts.inter(
+    fontSize: 16,
+    color: AppColor.redColor,
+    fontWeight: FontWeight.w400,
+  );
 }

@@ -4,5 +4,6 @@ class AppRoute {
   static const String loginRouteName = 'login_screen';
   static const String signupRouteName = 'signup_screen';
   static const String forgetPasswordRouteName = 'forget_password_screen';
+  static const String addEventRouteName= 'add_event_tab';
 
 }

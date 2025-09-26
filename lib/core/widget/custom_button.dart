@@ -6,25 +6,23 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.backgroundColor,
-    required this.text,
-    required this.styleText,
-    this.iconName,
+     this.text,
+     this.styleText,
     this.isIcon = false,
-    this.mainAxisAlignment,
     this.borderColor,
     this.paddingHeight,
     this.foregroundColor,
+    this.iconWidget,
   });
   final void Function() onPressed;
   final Color backgroundColor;
   final Color? foregroundColor;
   final Color? borderColor;
   final bool isIcon;
-  final MainAxisAlignment? mainAxisAlignment;
-  final String text;
-  final TextStyle styleText;
-  final Widget? iconName;
+  final String? text;
+  final TextStyle? styleText;
   final double? paddingHeight;
+  final Widget? iconWidget;
 
 
   @override
@@ -42,16 +40,8 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       child: isIcon
-          ? Row(
-              mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
-              children: [
-                SizedBox(width: width * 0.01),
-                iconName ?? SizedBox(),
-                SizedBox(width: width * 0.02),
-                Text(text, style: styleText),
-              ],
-            )
-          : Text(text, style: styleText),
+          ? iconWidget
+          : Text(text!, style: styleText),
     );
   }
 }

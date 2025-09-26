@@ -6,6 +6,7 @@ import 'package:evently/screens/dashboard/tabs/home/widget/welcome_and_name_them
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+import '../../../../model/event_model.dart';
 import 'widget/event_item.dart';
 
 class HomeTab extends StatefulWidget {
@@ -18,33 +19,8 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
 
-  List eventCategoryList = [
-    "all".tr(),
-    "sport".tr(),
-    "birthday".tr(),
-    "meeting".tr(),
-    "gaming".tr(),
-    "workshop".tr(),
-    "exhibition".tr(),
-    "book_club".tr(),
-    "eating".tr(),
-    "holiday".tr(),
-  ];
-
-  List eventIconList = [
-    FontAwesome.compass,
-    FontAwesome.basketball_solid,
-    FontAwesome.cake_candles_solid,
-    FontAwesome.handshake,
-    FontAwesome.gamepad_solid,
-    FontAwesome.screwdriver_wrench_solid,
-    FontAwesome.image,
-    FontAwesome.book_atlas_solid,
-    FontAwesome.utensils_solid,
-    FontAwesome.umbrella_beach_solid,
-  ];
-
-  List<EventItemModel> model = EventItemModel.eventItem;
+  List<EventItemModel> valueModel = EventItemModel.eventItem;
+  List<EventModel> eventsModel = EventModel.events;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +64,7 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
                 DefaultTabController(
-                  length: eventCategoryList.length,
+                  length: eventsModel.length,
                   child: TabBar(
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
@@ -102,11 +78,17 @@ class _HomeTabState extends State<HomeTab> {
                       setState(() {});
                     },
                     tabs: List.generate(
-                      eventCategoryList.length,
+                      eventsModel.length,
                       (index) => EventCategory(
+                        colorBorderIsSelected: Theme.of(context).colorScheme.secondary,
+                        colorIconSelected: Theme.of(context).colorScheme.primary,
+                        colorIconNotSelected: Theme.of(context).cardColor,
+                        styleTextSelected: Theme.of(context).textTheme.labelSmall!,
+                        styleTextNotSelected:Theme.of(context).textTheme.bodyLarge!,
+                        colorBackgroundIsSelected: Theme.of(context).colorScheme.secondary,
                         selected: index == selectedIndex,
-                        eventName: eventCategoryList[index],
-                        icon: eventIconList[index],
+                        eventName:eventsModel[index].eventName.tr(),
+                        icon:eventsModel[index].icon,
                       ),
                     ),
                   ),
@@ -119,11 +101,11 @@ class _HomeTabState extends State<HomeTab> {
               padding: EdgeInsets.only(top: height*0.019),
               separatorBuilder: (context, index) =>
                   SizedBox(height: height * 0.019),
-              itemCount: model.length,
+              itemCount: valueModel.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding:  EdgeInsets.symmetric(horizontal: width*0.025),
-                  child: EventItem(model: model[index]),
+                  child: EventItem(model: valueModel[index]),
                 );
               },
             ),

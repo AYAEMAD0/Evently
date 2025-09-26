@@ -6,6 +6,7 @@ import 'package:evently/screens/auth/forget_password_screen.dart';
 import 'package:evently/screens/auth/login_screen.dart';
 import 'package:evently/screens/auth/signup_screen.dart';
 import 'package:evently/screens/dashboard/dashboard_screen.dart';
+import 'package:evently/screens/dashboard/tabs/add_event/add_event_tab.dart';
 import 'package:evently/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,8 +59,9 @@ class MyApp extends StatelessWidget {
         AppRoute.loginRouteName: (context) => LoginScreen(),
         AppRoute.signupRouteName: (context) => SignupScreen(),
         AppRoute.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
+        AppRoute.addEventRouteName: (context) => AddEventTab(),
       },
-      initialRoute: AppRoute.onBoardingRouteName,
+      initialRoute: AppRoute.dashBoardRouteName,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
