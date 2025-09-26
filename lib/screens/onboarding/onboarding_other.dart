@@ -73,7 +73,7 @@ class _OnboardingOtherState extends State<OnboardingOther> {
                 : Alignment.bottomLeft,
           ),
           onDone: () {
-            Navigator.pushReplacementNamed(context, AppRoute.homeRouteName);
+            Navigator.pushReplacementNamed(context, AppRoute.loginRouteName);
           },
           showDoneButton: true,
           dotsDecorator: DotsDecorator(
@@ -81,11 +81,11 @@ class _OnboardingOtherState extends State<OnboardingOther> {
             color: theme.isDark()
                 ? AppColor.whiteBeigeColor
                 : AppColor.blackColor,
-            activeSize: const Size(20.0, 10.0),
+            activeSize: const Size(22.0, 10.0),
             activeColor: AppColor.primaryColor,
             spacing: const EdgeInsets.symmetric(horizontal: 3.0),
             activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
+              borderRadius: BorderRadius.circular(28.0),
             ),
           ),
         ),
@@ -100,14 +100,14 @@ class _OnboardingOtherState extends State<OnboardingOther> {
         alignment: language.isEnglishLanguage()
             ? Alignment.topLeft
             : Alignment.topRight,
-        child: Text(title, style: AppStyle.bold20Primary),
+        child: Text(title, style: AppStyle.bold20PrimaryLight),
       ),
       bodyWidget: Text(
         desc,
         style: theme.isDark()
             ? AppTheme.themeDark.textTheme.headlineSmall
             : AppTheme.themeLight.textTheme.headlineSmall,
-        textAlign: language.languageApp == 'en'
+        textAlign: language.languageApp.languageCode == 'en'
             ? TextAlign.left
             : TextAlign.right,
         maxLines: 15,

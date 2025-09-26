@@ -16,6 +16,9 @@ static const String exhibitionImage='assets/images/pngs/light/exhibition.png';
 static const String holidayImage='assets/images/pngs/light/holiday.png';
 static const String meetingImage='assets/images/pngs/light/meeting.png';
 static const String sportImage='assets/images/pngs/light/sport.png';
+static const String eatingImage='assets/images/pngs/light/eating.png';
+static const String gamingImage='assets/images/pngs/light/gaming.png';
+static const String workShopImage='assets/images/pngs/light/workShop.png';
 
 static const String birthdayImageDark='assets/images/pngs/dark/birthdayDark.png';
 static const String bookClubImageDark='assets/images/pngs/dark/bookClubDark.png';
@@ -23,7 +26,9 @@ static const String exhibitionImageDark='assets/images/pngs/dark/exhibitionDark.
 static const String holidayImageDark='assets/images/pngs/dark/holidayDark.png';
 static const String meetingImageDark='assets/images/pngs/dark/meetingDark.png';
 static const String sportImageDark='assets/images/pngs/dark/sportDark.png';
-
+static const String eatingImageDark='assets/images/pngs/dark/eatingDark.png';
+static const String gamingImageDark='assets/images/pngs/dark/gamingDark.png';
+static const String workShopImageDark='assets/images/pngs/dark/workShopDark.png';
 
 static const String arabicImage='assets/images/svgs/arabic.svg';
 static const String englishImage='assets/images/svgs/english.svg';
