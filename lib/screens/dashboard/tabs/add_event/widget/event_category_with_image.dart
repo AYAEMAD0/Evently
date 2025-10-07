@@ -9,7 +9,12 @@ import '../../home/widget/event_category.dart';
 
 class EventCategoryWithImage extends StatefulWidget {
   const EventCategoryWithImage({super.key, required this.onCategorySelected});
-  final Function(String imageEvent,String nameEvent) onCategorySelected;
+  final Function(
+    String imageLightEvent,
+    String imageDarkEvent,
+    String nameEvent,
+  )
+  onCategorySelected;
 
   @override
   State<EventCategoryWithImage> createState() => _EventCategoryWithImageState();
@@ -24,13 +29,11 @@ class _EventCategoryWithImageState extends State<EventCategoryWithImage> {
     double width = MediaQuery.of(context).size.width;
     var theme = Provider.of<ThemeProvider>(context);
 
-
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onCategorySelected(
-        theme.isDark()
-          ? eventsModel[selectedIndex].imageDark!
-          : eventsModel[selectedIndex].imageLight!,
-          eventsModel[selectedIndex].eventName.tr()
+        eventsModel[selectedIndex].imageLight!,
+        eventsModel[selectedIndex].imageDark!,
+        eventsModel[selectedIndex].eventName.tr(),
       );
     });
     return Column(

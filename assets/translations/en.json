@@ -71,7 +71,6 @@
   "description_required": "Description is required",
   "date_required": "Date is required",
   "time_required": "Time is required",
-  "event_added": "Event Added"
-
-
+  "event_added": "Event Added",
+  "no_events_yet": "No Events yet"
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
+import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
 import 'package:evently/screens/auth/forget_password_screen.dart';
 import 'package:evently/screens/auth/login_screen.dart';
@@ -40,6 +41,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => LanguageProvider(isEnglish),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => EventProvider(),
           ),
         ],
         child: const MyApp(),
