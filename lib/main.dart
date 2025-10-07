@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         AppRoute.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
         AppRoute.addEventRouteName: (context) => AddEventTab(),
       },
-      initialRoute: AppRoute.dashBoardRouteName,
+      initialRoute: AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
