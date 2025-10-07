@@ -70,7 +70,8 @@
   "title_required": "Title is required",
   "description_required": "Description is required",
   "date_required": "Date is required",
-  "time_required": "Time is required"
+  "time_required": "Time is required",
+  "event_added": "Event Added"
 
 
 }

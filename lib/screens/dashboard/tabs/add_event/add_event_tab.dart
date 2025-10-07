@@ -3,6 +3,8 @@ import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
+import 'package:evently/firebase/local/firebase_utils.dart';
+import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/language_provider/language_provider.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/widget/choose_event_location.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/widget/event_category_with_image.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/helper/validator_helper.dart';
+import '../../../../model/event_model.dart';
 
 class AddEventTab extends StatefulWidget {
   const AddEventTab({super.key});
@@ -34,11 +37,16 @@ class _AddEventTabState extends State<AddEventTab> {
     descController.dispose();
     super.dispose();
   }
+
+  int selectedIndex = 1;
+  List<EventModel> eventsModel = EventModel.events;
+  String? imageEvent, nameEvent;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-   var language= Provider.of<LanguageProvider>(context);
+    var language = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("create_event".tr(), style: AppStyle.medium20Primary),
@@ -55,7 +63,14 @@ class _AddEventTabState extends State<AddEventTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                EventCategoryWithImage(),
+                ////todo
+                EventCategoryWithImage(
+                  onCategorySelected: (image, name) {
+                    imageEvent = image;
+                    nameEvent = name;
+                  },
+                ),
+
                 SizedBox(height: height * 0.03),
                 //title
                 Text(
@@ -94,7 +109,7 @@ class _AddEventTabState extends State<AddEventTab> {
                 ),
                 SizedBox(height: height * 0.015),
 
-                //data
+                //date
                 EventDateAndTime(
                   icon: Icons.calendar_month_outlined,
                   colorIcon: Theme.of(context).colorScheme.onTertiary,
@@ -118,9 +133,15 @@ class _AddEventTabState extends State<AddEventTab> {
                       ? 'choose_time'.tr()
                       : language.isEnglishLanguage()
                       ? selectedTime!.format(context)
-                      :DateFormat.jm('ar').format(
-                    DateTime(0, 1, 1, selectedTime!.hour, selectedTime!.minute),
-                  ),
+                      : DateFormat.jm('ar').format(
+                          DateTime(
+                            0,
+                            1,
+                            1,
+                            selectedTime!.hour,
+                            selectedTime!.minute,
+                          ),
+                        ),
                   onPressed: chooseTime,
                 ),
                 SizedBox(height: height * 0.01),
@@ -151,7 +172,6 @@ class _AddEventTabState extends State<AddEventTab> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
-
     );
     if (date != null) {
       selectedDate = date;
@@ -171,17 +191,49 @@ class _AddEventTabState extends State<AddEventTab> {
   }
 
   void addEvent() {
-    if (formKey.currentState!.validate()) {}
+    bool hasError = false;
     if (selectedDate == null) {
       messageRequiredDate = "date_required".tr();
+      hasError = true;
     } else {
       messageRequiredDate = null;
     }
+
     if (selectedTime == null) {
       messageRequiredTime = "time_required".tr();
+      hasError = true;
     } else {
       messageRequiredTime = null;
     }
+
     setState(() {});
+    if (!formKey.currentState!.validate() || hasError) return;
+
+    FireBaseUtils.addEventTOFireStore(
+      EventModelFire(
+        imageEvent: imageEvent!,
+        nameCategoryEvent: nameEvent!,
+        titleEvent: titleController.text,
+        descEvent: descController.text,
+        dateEvent: selectedDate!,
+        timeEvent: selectedTime!.format(context),
+      ),
+    ).timeout(Duration(seconds: 1),onTimeout:() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "event_added".tr(),
+            textAlign: TextAlign.center,
+            style: AppStyle.bold20PrimaryLight,
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin:  EdgeInsets.symmetric(horizontal: 90, vertical: 10),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        ),
+      );
+      Navigator.pop(context);
+    }, );
+
+
   }
 }
