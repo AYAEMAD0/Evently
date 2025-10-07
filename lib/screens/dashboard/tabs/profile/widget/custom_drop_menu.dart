@@ -25,14 +25,14 @@ class CustomDropMenu extends StatelessWidget {
       ),
       onSelected: onSelected,
       menuStyle: MenuStyle(
-          backgroundColor: MaterialStateProperty.all(
+          backgroundColor: WidgetStateProperty.all(
             AppColor.backgroundLightColor,
           ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             )),
-          fixedSize: MaterialStateProperty.all(Size(width*0.90,double.nan))
+          fixedSize: WidgetStateProperty.all(Size(width*0.90,double.nan))
 
       ),
       dropdownMenuEntries:menuList,

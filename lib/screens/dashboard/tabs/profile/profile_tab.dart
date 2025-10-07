@@ -123,7 +123,7 @@ class ProfileTab extends StatelessWidget {
 
   ButtonStyle builtStyleBtn() {
     return ButtonStyle(
-      foregroundColor: MaterialStateProperty.all(AppColor.blackColor),
+      foregroundColor: WidgetStateProperty.all(AppColor.blackColor),
     );
   }
 }

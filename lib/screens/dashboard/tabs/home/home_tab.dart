@@ -4,8 +4,6 @@ import 'package:evently/model/event_item_model.dart';
 import 'package:evently/screens/dashboard/tabs/home/widget/event_category.dart';
 import 'package:evently/screens/dashboard/tabs/home/widget/welcome_and_name_theme_lang.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
-
 import '../../../../model/event_model.dart';
 import 'widget/event_item.dart';
 

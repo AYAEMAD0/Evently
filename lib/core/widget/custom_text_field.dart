@@ -1,6 +1,8 @@
 import 'package:evently/core/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/app_style.dart';
+
 class CustomTextField extends StatelessWidget {
   final TextStyle textStyle;
   final String hint;
@@ -76,6 +78,7 @@ class CustomTextField extends StatelessWidget {
         prefixIconColor: prefixIconColor,
         suffixIcon: suffixIcon,
         suffixIconColor: suffixIconColor,
+        errorStyle: AppStyle.regular16Red,
         filled: true,
         fillColor: fillColor,
       ),
