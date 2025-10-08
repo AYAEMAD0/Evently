@@ -57,6 +57,7 @@
   "location": "Location",
   "choose_event_location": "Choose Event Location",
   "add_event": "Add Event",
+  "event_details": "Event Details",
   "edit_event": "Edit Event",
   "update_event": "Update Event",
   "name_required": "Name is required",

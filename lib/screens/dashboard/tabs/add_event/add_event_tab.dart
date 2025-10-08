@@ -143,7 +143,18 @@ class _AddEventTabState extends State<AddEventTab> {
                 SizedBox(height: height * 0.01),
 
                 //location
-                ChooseEventLocation(),
+                Text(
+                  "location".tr(),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                SizedBox(height: height * 0.015),
+                ChooseEventLocation(
+                  icon: Icons.my_location_sharp,
+                  value: Text(
+                    "choose_event_location".tr(),
+                    style: AppStyle.bold16Primary,
+                  ),
+                ),
 
                 SizedBox(height: height * 0.02),
                 //add event
