@@ -1,28 +1,30 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
-import 'package:evently/model/event_item_model.dart';
+import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EventItem extends StatelessWidget {
   const EventItem({super.key, required this.model});
-  final EventItemModel model;
+  final EventModelFire model;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    var isDark=Provider.of<ThemeProvider>(context).isDark();
+    var isDark = Provider.of<ThemeProvider>(context).isDark();
     return Container(
-      height: height * 0.33,
+      height: height * 0.34,
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.primaryColor, width: 1.5),
+        border: Border.all(color: AppColor.primaryColor, width: 1.2),
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(isDark? model.imageDark:model.imageLight),
+          image: AssetImage(
+            isDark ? model.imageDarkEvent :  model.imageLightEvent,
+          ),
           fit: BoxFit.fill,
         ),
-        
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -43,10 +45,19 @@ class EventItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 color: Theme.of(context).colorScheme.surface,
               ),
-              child: Text(
-                model.date,
-                textAlign: TextAlign.center,
-                style: AppStyle.bold20PrimaryLight,
+              child: Column(
+                children: [
+                  Text(
+                    "${model.dateEvent.day}",
+                    textAlign: TextAlign.center,
+                    style: AppStyle.bold20PrimaryLight,
+                  ),
+                  Text(
+                    DateFormat('MMM').format(model.dateEvent),
+                    textAlign: TextAlign.center,
+                    style: AppStyle.bold20PrimaryLight,
+                  ),
+                ],
               ),
             ),
             //desc
@@ -57,7 +68,7 @@ class EventItem extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColor.primaryColor,width: 1.3),
+                border: Border.all(color: AppColor.primaryColor, width: 1.3),
                 color: Theme.of(context).colorScheme.surface,
               ),
               child: Row(
@@ -65,7 +76,7 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      model.desc,
+                      model.descEvent,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),

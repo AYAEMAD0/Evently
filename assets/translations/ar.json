@@ -70,6 +70,7 @@
   "title_required": "العنوان مطلوب",
   "description_required": "الوصف مطلوب",
   "date_required": "التاريخ مطلوب",
-  "time_required": "الوقت مطلوب"
-
+  "time_required": "الوقت مطلوب",
+  "event_added": "تمت إضافة",
+  "no_events_yet": "لم يتم إضافة أي حدث بعد"
 }

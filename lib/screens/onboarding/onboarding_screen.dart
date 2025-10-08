@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/core/widget/custom_toggle_language.dart';
-import 'package:evently/provider/language_provider/language_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
 import 'package:evently/screens/onboarding/onboarding_other.dart';
 import 'package:evently/screens/onboarding/widget/custom_toggle_switch.dart';
