@@ -21,7 +21,7 @@ class EventItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: AssetImage(
-            isDark ? model.imageDarkEvent : model.imageDarkEvent,
+            isDark ? model.imageDarkEvent :  model.imageLightEvent,
           ),
           fit: BoxFit.fill,
         ),
