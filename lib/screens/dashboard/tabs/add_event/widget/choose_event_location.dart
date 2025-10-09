@@ -3,17 +3,19 @@ import '../../../../../core/utils/app_color.dart';
 import '../../../../../core/widget/custom_button.dart';
 
 class ChooseEventLocation extends StatelessWidget {
-  const ChooseEventLocation({super.key, required this.icon,this.isIconEnd=true, required this.value});
-  final IconData icon;
-  final bool isIconEnd;
+  const ChooseEventLocation({
+    super.key,
+    required this.value,
+    required this.onPressed,
+  });
   final Widget value;
-
+  final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return CustomButton(
-      onPressed: addLocation,
+      onPressed: onPressed,
       backgroundColor: AppColor.transparentColor,
       borderColor: AppColor.primaryColor,
       isIcon: true,
@@ -30,25 +32,17 @@ class ChooseEventLocation extends StatelessWidget {
               color: AppColor.primaryColor,
             ),
             child: Icon(
-              icon,
+              Icons.my_location_sharp,
               size: 30,
               color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
-         value,
+          value,
           Spacer(),
-          isIconEnd?
-          Icon(
-            Icons.arrow_forward_ios_rounded,
-            color: AppColor.primaryColor,
-          ):
-              SizedBox.shrink(),
+          Icon(Icons.arrow_forward_ios_rounded, color: AppColor.primaryColor),
           SizedBox(width: width * 0.01),
         ],
       ),
     );
-  }
-  void addLocation() {
-
   }
 }

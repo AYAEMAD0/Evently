@@ -73,5 +73,13 @@
   "date_required": "Date is required",
   "time_required": "Time is required",
   "event_added": "Event Added",
-  "no_events_yet": "No Events yet"
+  "no_events_yet": "No Events yet",
+  "event_edited": "Event edited",
+  "delete_event": "Delete Event",
+  "delete_event_confirmation": "Are you sure you want to delete the event?",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "event_deleted": "Event deleted"
+
+
 }

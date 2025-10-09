@@ -73,5 +73,14 @@
   "date_required": "التاريخ مطلوب",
   "time_required": "الوقت مطلوب",
   "event_added": "تمت إضافة",
-  "no_events_yet": "لم يتم إضافة أي حدث بعد"
+  "no_events_yet": "لم يتم إضافة أي حدث بعد",
+  "event_edited": "تم تعديل الحدث",
+  "delete_event": "حذف الحدث",
+  "delete_event_confirmation": "هل أنت متأكد أنك تريد حذف الحدث؟",
+  "cancel": "إلغاء",
+  "ok": "موافق",
+  "event_deleted": "تم حذف الحدث"
+
+
+
 }

@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/helper/validator_helper.dart';
-import '../../../../model/event_model.dart';
 
 class AddEventTab extends StatefulWidget {
   const AddEventTab({super.key});
@@ -32,8 +31,6 @@ class _AddEventTabState extends State<AddEventTab> {
   TextEditingController descController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 1;
-  List<EventModel> eventsModel = EventModel.events;
   String? imageLightEvent,imageDarkEvent, nameEvent;
   late EventProvider event;
   @override
@@ -149,7 +146,9 @@ class _AddEventTabState extends State<AddEventTab> {
                 ),
                 SizedBox(height: height * 0.015),
                 ChooseEventLocation(
-                  icon: Icons.my_location_sharp,
+                  onPressed: (){
+                    //todo add location
+                  },
                   value: Text(
                     "choose_event_location".tr(),
                     style: AppStyle.bold16Primary,
@@ -216,7 +215,7 @@ class _AddEventTabState extends State<AddEventTab> {
     setState(() {});
     if (!formKey.currentState!.validate() || hasError) return;
 
-    FireBaseUtils.addEventTOFireStore(
+    FireBaseUtils.addEventToFireStore(
       EventModelFire(
         imageLightEvent: imageLightEvent!,
         imageDarkEvent: imageDarkEvent!,
@@ -250,7 +249,7 @@ class _AddEventTabState extends State<AddEventTab> {
 
   @override
   void dispose() {
-    event.getAllEvent();
+    event.changeIndex(event.selectedIndex);
     titleController.dispose();
     descController.dispose();
     super.dispose();
