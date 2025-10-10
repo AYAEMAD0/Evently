@@ -3,6 +3,7 @@ import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/widget/custom_button.dart';
+import 'package:evently/core/widget/custom_snackbar.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/firebase/local/firebase_utils.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
@@ -46,7 +47,9 @@ class _EditEventScreenState extends State<EditEventScreen> {
       selectedTime = TimeOfDay.fromDateTime(parsedDateTime);
     } catch (e) {
       try {
-        DateTime parsedDateTime = DateFormat.jm('ar').parse(eventModel.timeEvent);
+        DateTime parsedDateTime = DateFormat.jm(
+          'ar',
+        ).parse(eventModel.timeEvent);
         selectedTime = TimeOfDay.fromDateTime(parsedDateTime);
       } catch (e2) {
         selectedTime = TimeOfDay.now();
@@ -244,20 +247,9 @@ class _EditEventScreenState extends State<EditEventScreen> {
     ).timeout(
       Duration(seconds: 1),
       onTimeout: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "event_edited".tr(),
-              textAlign: TextAlign.center,
-              style: AppStyle.bold20PrimaryLight,
-            ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.symmetric(horizontal: 90, vertical: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(CustomSnackbar.show("event_edited"));
         Navigator.popUntil(context, (route) {
           return route.settings.name == AppRoute.dashBoardRouteName;
         });

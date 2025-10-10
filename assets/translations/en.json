@@ -79,7 +79,10 @@
   "delete_event_confirmation": "Are you sure you want to delete the event?",
   "cancel": "Cancel",
   "ok": "OK",
-  "event_deleted": "Event deleted"
+  "event_deleted": "Event deleted",
+  "event_update": "Event updated",
+  "no_favourite_event": "No favourite events yet"
+
 
 
 }

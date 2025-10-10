@@ -79,7 +79,10 @@
   "delete_event_confirmation": "هل أنت متأكد أنك تريد حذف الحدث؟",
   "cancel": "إلغاء",
   "ok": "موافق",
-  "event_deleted": "تم حذف الحدث"
+  "event_deleted": "تم حذف الحدث",
+  "event_update": "تم تحديث الحدث",
+  "no_favourite_event": "لا توجد أحداث مفضلة بعد"
+
 
 
 

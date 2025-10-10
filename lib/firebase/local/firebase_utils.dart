@@ -35,5 +35,4 @@ class FireBaseUtils {
     DocumentReference<EventModelFire> docRef = collectionRef.doc(event.id);
     return docRef.delete();
   }
-
 }

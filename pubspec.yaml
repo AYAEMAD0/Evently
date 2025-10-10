@@ -77,6 +77,19 @@ flutter:
     - assets/images/pngs/light/
     - assets/images/pngs/dark/
     - assets/translations/
+    - lib/screens/dashboard/
+    - lib/screens/dashboard/tabs/
+    - lib/screens/dashboard/tabs/map/
+    - lib/screens/dashboard/tabs/home/
+    - lib/screens/dashboard/tabs/home/widget/
+    - lib/screens/dashboard/tabs/home/edit_event/
+    - lib/screens/dashboard/tabs/home/details_event/
+    - lib/screens/dashboard/tabs/home/details_event/widget/
+    - lib/screens/dashboard/tabs/profile/
+    - lib/screens/dashboard/tabs/profile/widget/
+    - lib/screens/dashboard/tabs/add_event/
+    - lib/screens/dashboard/tabs/add_event/widget/
+    - lib/screens/dashboard/tabs/favourite/
 
 
 

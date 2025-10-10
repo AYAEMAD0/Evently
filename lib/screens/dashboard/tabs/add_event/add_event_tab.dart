@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/widget/custom_button.dart';
+import 'package:evently/core/widget/custom_snackbar.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/firebase/local/firebase_utils.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
@@ -31,7 +32,7 @@ class _AddEventTabState extends State<AddEventTab> {
   TextEditingController descController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String? imageLightEvent,imageDarkEvent, nameEvent;
+  String? imageLightEvent, imageDarkEvent, nameEvent;
   late EventProvider event;
   @override
   Widget build(BuildContext context) {
@@ -57,10 +58,10 @@ class _AddEventTabState extends State<AddEventTab> {
               children: [
                 ////todo
                 EventCategoryWithImage(
-                  onCategorySelected: (light, dark, name){
-                    imageLightEvent=light;
-                    imageDarkEvent=dark;
-                    nameEvent=name;
+                  onCategorySelected: (light, dark, name) {
+                    imageLightEvent = light;
+                    imageDarkEvent = dark;
+                    nameEvent = name;
                   },
                 ),
 
@@ -146,7 +147,7 @@ class _AddEventTabState extends State<AddEventTab> {
                 ),
                 SizedBox(height: height * 0.015),
                 ChooseEventLocation(
-                  onPressed: (){
+                  onPressed: () {
                     //todo add location
                   },
                   value: Text(
@@ -228,20 +229,9 @@ class _AddEventTabState extends State<AddEventTab> {
     ).timeout(
       Duration(seconds: 1),
       onTimeout: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "event_added".tr(),
-              textAlign: TextAlign.center,
-              style: AppStyle.bold20PrimaryLight,
-            ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.symmetric(horizontal: 90, vertical: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(CustomSnackbar.show("event_added"));
         Navigator.pop(context);
       },
     );
