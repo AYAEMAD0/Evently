@@ -72,5 +72,18 @@
   "date_required": "Date is required",
   "time_required": "Time is required",
   "event_added": "Event Added",
-  "no_events_yet": "No Events yet"
+  "no_events_yet": "No Events yet",
+  "loading": "Loading..",
+  "successfully": "Successfully",
+  "login_successfully": "Login successfully",
+  "ok": "Ok",
+  "email_not_verified": "Email not verified",
+  "verify_email_message": "Your email is not verified yet. A new verification email has been sent to",
+  "verify_logging": "Please verify before logging in.",
+  "error": "Error",
+  "verification_email_sent": "A verification email has been sent to",
+  "check_inbox": "Please check your inbox and verify your account before logging in.",
+  "weak_password": "The password provided is too weak.",
+  "email_already_exists": "The account already exists for that email."
+
 }

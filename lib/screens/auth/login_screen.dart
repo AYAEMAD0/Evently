@@ -9,8 +9,10 @@ import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/core/widget/custom_toggle_language.dart';
 import 'package:evently/screens/auth/widget/already_and_donot_have_account.dart';
 import 'package:evently/screens/auth/widget/built_or_way_login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../core/utils/custom_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,10 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    print('---------------------------------------------');
+    print(context.locale);
+    print('---------------------------------------------');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -75,7 +81,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     prefixIconColor: Theme.of(
                       context,
                     ).colorScheme.outlineVariant,
-                    suffixIcon: Icon(Icons.visibility_off_sharp),
+                    obscure: showPassword,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        //todo show password
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
+                      },
+                      icon: Icon(
+                        showPassword
+                            ? Icons.visibility_off_sharp
+                            : Icons.visibility,
+                      ),
+                    ),
                     suffixIconColor: Theme.of(
                       context,
                     ).colorScheme.outlineVariant,
@@ -101,9 +120,80 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 0.024 * height),
                   CustomButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {}
+                    onPressed: () async {
                       //todo logic login
+                      if (formKey.currentState!.validate()) {
+                        //todo show loading
+                        CustomDialog.showLoading(
+                          context: context,
+                          background: Theme.of(context).scaffoldBackgroundColor,
+                          text: 'loading'.tr(),
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        );
+                        try {
+                          var credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                          var user = credential.user;
+                          await user?.reload();
+                          if (user != null && user.emailVerified) {
+                            //todo hide loading
+                            CustomDialog.hideLoading(context: context);
+                            //todo show message successfully
+                            CustomDialog.showMessage(
+                              context: context,
+                              background: Theme.of(
+                                context,
+                              ).scaffoldBackgroundColor,
+                              styleMessage: Theme.of(
+                                context,
+                              ).textTheme.headlineSmall,
+                              message: 'login_successfully'.tr(),
+                              title: 'successfully'.tr(),
+                              posActionName: 'ok'.tr(),
+                              posActionClick: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  AppRoute.dashBoardRouteName,
+                                );
+                              },
+                            );
+                          }else {
+                            await user?.sendEmailVerification();
+                            //todo hide loading
+                            CustomDialog.hideLoading(context: context);
+                            //todo show error Verification
+                            CustomDialog.showMessage(
+                              context: context,
+                              background: Theme.of(context).scaffoldBackgroundColor,
+                              styleMessage: Theme.of(context).textTheme.headlineSmall,
+                              title: 'email_not_verified'.tr(),
+                              message:
+                              '${'email_not_verified'.tr()} ${emailController.text}. ${"verify_logging".tr()}',
+                              posActionName: 'ok'.tr(),
+                            );
+                            await FirebaseAuth.instance.signOut();
+                          }
+                        } catch (e) {
+                          //todo hide loading
+                          CustomDialog.hideLoading(context: context);
+                          //todo show message error
+                          CustomDialog.showMessage(
+                            context: context,
+                            background: Theme.of(
+                              context,
+                            ).scaffoldBackgroundColor,
+                            styleMessage: Theme.of(
+                              context,
+                            ).textTheme.headlineSmall,
+                            title: 'error'.tr(),
+                            message: e.toString(),
+                            posActionName: 'ok'.tr(),
+                          );
+                        }
+                      }
                     },
                     backgroundColor: AppColor.primaryColor,
                     text: 'login'.tr(),
@@ -122,11 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   BuiltOrWayLogin(),
                   SizedBox(height: 0.03 * height),
                   CustomButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        AppRoute.dashBoardRouteName,
-                      );
+                    onPressed: (){
                       //todo login with google
                     },
                     backgroundColor: AppColor.transparentColor,
@@ -137,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(AppAsset.googleImage),
-                        SizedBox(width: width*0.02,),
+                        SizedBox(width: width * 0.02),
                         Text(
                           'login_with_google'.tr(),
                           style: AppStyle.medium20Primary,
