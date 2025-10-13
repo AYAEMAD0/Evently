@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../firebase/model/user_model.dart';
-import '../../provider/user_provider.dart';
+import '../../provider/user_provider/user_provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
