@@ -11,6 +11,10 @@ import 'package:evently/core/widget/custom_toggle_language.dart';
 import 'package:evently/screens/auth/widget/already_and_donot_have_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../firebase/model/user_model.dart';
+import '../../provider/user_provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -42,6 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("register".tr(), style: AppStyle.medium20Primary),
@@ -92,6 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 0.03 * height),
                   CustomTextField(
                     textStyle: Theme.of(context).textTheme.labelLarge!,
+                    keyboard: TextInputType.visiblePassword,
                     hint: "password".tr(),
                     controller: passwordController,
                     validator: (text) => ValidatorHelper.validatePassword(text),
@@ -123,6 +129,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 0.03 * height),
                   CustomTextField(
                     textStyle: Theme.of(context).textTheme.labelLarge!,
+                    keyboard: TextInputType.visiblePassword,
                     hint: "re_password".tr(),
                     controller: rePasswordController,
                     validator: (text) =>
@@ -170,10 +177,33 @@ class _SignupScreenState extends State<SignupScreen> {
                         try {
                           var credential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
                               );
-                          await credential.user?.sendEmailVerification();
+                          var user = FirebaseAuth.instance.currentUser;
+
+                          if (user != null) {
+                            await user.updateDisplayName(
+                              nameController.text.trim(),
+                            );
+                            await user.reload();
+                            user = FirebaseAuth.instance.currentUser;
+                            await user!.sendEmailVerification();
+                            var userModel = UserModel(
+                              id: user.uid,
+                              name: user.displayName ?? "",
+                              email: user.email ?? "",
+                            );
+
+                            userProvider.changeCurrentUser(userModel);
+
+                            print('---------------------------------------');
+                            print('Name: ${user.displayName}');
+                            print('UID: ${user.uid}');
+                            print('Email: ${user.email}');
+                            print('---------------------------------------');
+
+
                           //todo hide loading
                           CustomDialog.hideLoading(context: context);
                           //todo show message successfully
@@ -196,6 +226,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               );
                             },
                           );
+                          }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             //todo hide loading
