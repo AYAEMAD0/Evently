@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
@@ -23,7 +22,7 @@ import 'provider/language_provider/language_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  await FirebaseFirestore.instance.disableNetwork();
+  //await FirebaseFirestore.instance.disableNetwork();
   await EasyLocalization.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
@@ -76,7 +75,7 @@ class MyApp extends StatelessWidget {
         AppRoute.detailsEventRouteName: (context) => DetailsEventScreen(),
         AppRoute.editEventRouteName: (context) => EditEventScreen(),
       },
-      initialRoute: AppRoute.dashBoardRouteName,
+      initialRoute: AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

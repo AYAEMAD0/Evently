@@ -13,10 +13,10 @@ class EventProvider extends ChangeNotifier {
 
   int selectedIndex = 0;
 
-  void getAllEvent() async {
+  void getAllEvent(String uid) async {
     //todo: get event
     QuerySnapshot<EventModelFire> query =
-        await FireBaseUtils.getEventCollection().get();
+        await FireBaseUtils.getEventCollection(uid).get();
     //todo: List<EventModelFire>   map  List<QueryDocumentSnapshot<EventModelFire>>
     listAllEvent = query.docs.map((e) => e.data()).toList();
     filterList = listAllEvent;
@@ -27,10 +27,10 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEvent() async {
+  void getFilterEvent(String uid) async {
     //todo: get event
     QuerySnapshot<EventModelFire> query =
-        await FireBaseUtils.getEventCollection().get();
+        await FireBaseUtils.getEventCollection(uid).get();
     //todo: List<EventModelFire>   map  List<QueryDocumentSnapshot<EventModelFire>>
     listAllEvent = query.docs.map((e) => e.data()).toList();
     //todo: filter event
@@ -46,33 +46,38 @@ class EventProvider extends ChangeNotifier {
   }
 
   //todo: change index for tabs
-  void changeIndex(index) async {
+  void changeIndex(index,String uid) async {
     selectedIndex = index;
-    selectedIndex == 0 ? getAllEvent() : getFilterEvent();
+    selectedIndex == 0 ? getAllEvent(uid) : getFilterEvent(uid);
   }
 
-  void updateFavouriteEvent(EventModelFire event, BuildContext context) {
+  void updateFavouriteEvent(EventModelFire event, BuildContext context,String uid) {
     //todo: update favourite event
-    FireBaseUtils.getEventCollection()
+    FireBaseUtils.getEventCollection(uid)
         .doc(event.id)
         .update({'isFavourite': !event.isFavourite})
-        .timeout(
-          Duration(milliseconds: 500),
-          onTimeout: () {
-            ScaffoldMessenger.of(
+    .then((value) {
+      ScaffoldMessenger.of(
               context,
             ).showSnackBar(CustomSnackbar.show('event_update'));
-          },
-        );
-    selectedIndex==0?getAllEvent():getFilterEvent();
-    getAllFavouriteEvent();
+    },);
+        // .timeout(
+        //   Duration(milliseconds: 500),
+        //   onTimeout: () {
+        //     ScaffoldMessenger.of(
+        //       context,
+        //     ).showSnackBar(CustomSnackbar.show('event_update'));
+        //   },
+        // );
+    selectedIndex==0?getAllEvent(uid):getFilterEvent(uid);
+    getAllFavouriteEvent(uid);
     notifyListeners();
   }
 
-  void getAllFavouriteEvent() async{
+  void getAllFavouriteEvent(String uid) async{
     //todo: filter favourite event
     QuerySnapshot<EventModelFire> query =
-        await FireBaseUtils.getEventCollection().get();
+        await FireBaseUtils.getEventCollection(uid).get();
     //todo: List<EventModelFire>   map  List<QueryDocumentSnapshot<EventModelFire>>
     listAllEvent = query.docs.map((e) => e.data()).toList();
     //todo:  filter favourite event

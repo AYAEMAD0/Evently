@@ -6,6 +6,7 @@ import 'package:evently/firebase/local/firebase_utils.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/dashboard/tabs/home/details_event/widget/show_date_and_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,7 @@ class DetailsEventScreen extends StatefulWidget {
 
 class _DetailsEventScreenState extends State<DetailsEventScreen> {
   late EventProvider eventProvider;
+  late UserProvider userProvider;
   late EventModelFire event;
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
     var theme = Provider.of<ThemeProvider>(context);
     event = ModalRoute.of(context)!.settings.arguments as EventModelFire;
     eventProvider = Provider.of<EventProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("event_details".tr(), style: AppStyle.medium20Primary),
@@ -151,33 +154,54 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
   }
 
   void deleteEvent() {
-    FireBaseUtils.deleteEventToFireStore(event).timeout(
-      Duration(seconds: 1),
-      onTimeout: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "event_deleted".tr(),
-              textAlign: TextAlign.center,
-              style: AppStyle.bold20PrimaryLight,
-            ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.symmetric(horizontal: 90, vertical: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-          ),
-        );
-        Navigator.popUntil(context, (route) {
-          return route.settings.name == AppRoute.dashBoardRouteName;
-        });
-      },
-    );
+    FireBaseUtils.deleteEventToFireStore(event,userProvider.currentUser!.id)
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "event_deleted".tr(),
+                  textAlign: TextAlign.center,
+                  style: AppStyle.bold20PrimaryLight,
+                ),
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.symmetric(horizontal: 90, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+            );
+            Navigator.popUntil(context, (route) {
+              return route.settings.name == AppRoute.dashBoardRouteName;
+            });
+
+        },);
+    //     .timeout(
+    //   Duration(seconds: 1),
+    //   onTimeout: () {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text(
+    //           "event_deleted".tr(),
+    //           textAlign: TextAlign.center,
+    //           style: AppStyle.bold20PrimaryLight,
+    //         ),
+    //         behavior: SnackBarBehavior.floating,
+    //         margin: EdgeInsets.symmetric(horizontal: 90, vertical: 10),
+    //         shape: RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.circular(25),
+    //         ),
+    //       ),
+    //     );
+    //     Navigator.popUntil(context, (route) {
+    //       return route.settings.name == AppRoute.dashBoardRouteName;
+    //     });
+    //   },
+    // );
   }
 
   @override
   void dispose() {
-    eventProvider.changeIndex(eventProvider.selectedIndex);
+    eventProvider.changeIndex(eventProvider.selectedIndex,userProvider.currentUser!.id);
     super.dispose();
   }
 }

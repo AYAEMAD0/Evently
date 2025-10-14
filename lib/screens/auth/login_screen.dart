@@ -8,6 +8,7 @@ import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/core/widget/custom_toggle_language.dart';
 import 'package:evently/firebase/model/user_model.dart';
+import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/auth/widget/already_and_donot_have_account.dart';
 import 'package:evently/screens/auth/widget/built_or_way_login.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/custom_dialog.dart';
+import '../../firebase/remote/firebase_utils_remote.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -123,84 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 0.024 * height),
                   CustomButton(
-                    onPressed: () async {
+                    onPressed: () {
                       //todo logic login
-                      if (formKey.currentState!.validate()) {
-                        //todo show loading
-                        CustomDialog.showLoading(
-                          context: context,
-                          background: Theme.of(context).scaffoldBackgroundColor,
-                          text: 'loading'.tr(),
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        );
-                        try {
-                          var credential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                          var user = credential.user;
-                          await user?.reload();
-                          if (user != null && user.emailVerified) {
-                            //todo hide loading
-                            CustomDialog.hideLoading(context: context);
-                            //todo show message successfully
-                            CustomDialog.showMessage(
-                              context: context,
-                              background: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              styleMessage: Theme.of(
-                                context,
-                              ).textTheme.headlineSmall,
-                              message: 'login_successfully'.tr(),
-                              title: 'successfully'.tr(),
-                              posActionName: 'ok'.tr(),
-                              posActionClick: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  AppRoute.dashBoardRouteName,
-                                );
-                              },
-                            );
-                          } else {
-                            await user?.sendEmailVerification();
-                            //todo hide loading
-                            CustomDialog.hideLoading(context: context);
-                            //todo show error Verification
-                            CustomDialog.showMessage(
-                              context: context,
-                              background: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              styleMessage: Theme.of(
-                                context,
-                              ).textTheme.headlineSmall,
-                              title: 'email_not_verified'.tr(),
-                              message:
-                                  '${'email_not_verified'.tr()} ${emailController.text}. ${"verify_logging".tr()}',
-                              posActionName: 'ok'.tr(),
-                            );
-                            await FirebaseAuth.instance.signOut();
-                          }
-                        } catch (e) {
-                          //todo hide loading
-                          CustomDialog.hideLoading(context: context);
-                          //todo show message error
-                          CustomDialog.showMessage(
-                            context: context,
-                            background: Theme.of(
-                              context,
-                            ).scaffoldBackgroundColor,
-                            styleMessage: Theme.of(
-                              context,
-                            ).textTheme.headlineSmall,
-                            title: 'error'.tr(),
-                            message: e.toString(),
-                            posActionName: 'ok'.tr(),
-                          );
-                        }
-                      }
+                      login();
                     },
                     backgroundColor: AppColor.primaryColor,
                     text: 'login'.tr(),
@@ -219,75 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   BuiltOrWayLogin(),
                   SizedBox(height: 0.03 * height),
                   CustomButton(
-                    onPressed: () async {
+                    onPressed: () {
                       //todo login with google
-                      //todo show loading
-                      CustomDialog.showLoading(
-                        context: context,
-                        background: Theme.of(context).scaffoldBackgroundColor,
-                        text: 'loading'.tr(),
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      );
-                      try {
-                        final GoogleSignInAccount? googleUser =
-                            await GoogleSignIn().signIn();
-                        if (googleUser == null) {
-                          //todo hide loading
-                          CustomDialog.hideLoading(context: context);
-                          return;
-                        }
-                        final GoogleSignInAuthentication googleAuth =
-                            await googleUser.authentication;
-                        final credential = GoogleAuthProvider.credential(
-                          accessToken: googleAuth.idToken,
-                          idToken: googleAuth.idToken,
-                        );
-                        FirebaseAuth.instance.signInWithCredential(credential);
-                        var user = UserModel(
-                          id: googleUser.id,
-                          name: googleUser.displayName!,
-                          email: googleUser.email,
-                        );
-                        userProvider.changeCurrentUser(user);
-                        print('---------------------------------------');
-                        print('Name: ${googleUser.displayName??""}');
-                        print('UID: ${googleUser.id}');
-                        print('Email: ${googleUser.email??""}');
-                        print('---------------------------------------');
-                        //todo hide loading
-                        CustomDialog.hideLoading(context: context);
-                        //todo show message successfully
-                        CustomDialog.showMessage(
-                          context: context,
-                          background: Theme.of(context).scaffoldBackgroundColor,
-                          styleMessage: Theme.of(
-                            context,
-                          ).textTheme.headlineSmall,
-                          message: 'login_successfully'.tr(),
-                          title: 'successfully'.tr(),
-                          posActionName: 'ok'.tr(),
-                          posActionClick: () {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoute.dashBoardRouteName,
-                            );
-                          },
-                        );
-                      } on Exception catch (e) {
-                        //todo hide loading
-                        CustomDialog.hideLoading(context: context);
-                        //todo show message error
-                        CustomDialog.showMessage(
-                          context: context,
-                          background: Theme.of(context).scaffoldBackgroundColor,
-                          styleMessage: Theme.of(
-                            context,
-                          ).textTheme.headlineSmall,
-                          title: 'error'.tr(),
-                          message: e.toString(),
-                          posActionName: 'ok'.tr(),
-                        );
-                      }
+                    loginGoogle();
                     },
                     backgroundColor: AppColor.transparentColor,
                     borderColor: AppColor.primaryColor,
@@ -317,5 +177,156 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void login() async {
+    if (formKey.currentState!.validate()) {
+      //todo show loading
+      CustomDialog.showLoading(
+        context: context,
+        background: Theme.of(context).scaffoldBackgroundColor,
+        text: 'loading'.tr(),
+        style: Theme.of(context).textTheme.headlineSmall,
+      );
+      try {
+        var credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        var user = credential.user;
+        await user?.reload();
+        if (user != null && user.emailVerified) {
+          var userFire = await FirebaseUtilsRemote().getUserFromFirebase(
+            user.uid,
+          );
+          var userProvider = Provider.of<UserProvider>(context,listen: false);
+          userProvider.changeCurrentUser(userFire!);
+          var eventProvider = Provider.of<EventProvider>(context,listen: false);
+          eventProvider.changeIndex(0, userProvider.currentUser!.id);
+          eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
+
+
+          //todo hide loading
+          CustomDialog.hideLoading(context: context);
+          //todo show message successfully
+          CustomDialog.showMessage(
+            context: context,
+            background: Theme.of(context).scaffoldBackgroundColor,
+            styleMessage: Theme.of(context).textTheme.headlineSmall,
+            message: 'login_successfully'.tr(),
+            title: 'successfully'.tr(),
+            posActionName: 'ok'.tr(),
+            posActionClick: () {
+              Navigator.pushReplacementNamed(
+                context,
+                AppRoute.dashBoardRouteName,
+              );
+            },
+          );
+        } else {
+          await user?.sendEmailVerification();
+          //todo hide loading
+          CustomDialog.hideLoading(context: context);
+          //todo show error Verification
+          CustomDialog.showMessage(
+            context: context,
+            background: Theme.of(context).scaffoldBackgroundColor,
+            styleMessage: Theme.of(context).textTheme.headlineSmall,
+            title: 'email_not_verified'.tr(),
+            message:
+                '${'email_not_verified'.tr()} ${emailController.text}. ${"verify_logging".tr()}',
+            posActionName: 'ok'.tr(),
+          );
+          await FirebaseAuth.instance.signOut();
+        }
+      } catch (e) {
+        //todo hide loading
+        CustomDialog.hideLoading(context: context);
+        //todo show message error
+        CustomDialog.showMessage(
+          context: context,
+          background: Theme.of(context).scaffoldBackgroundColor,
+          styleMessage: Theme.of(context).textTheme.headlineSmall,
+          title: 'error'.tr(),
+          message: e.toString(),
+          posActionName: 'ok'.tr(),
+        );
+      }
+    }
+  }
+  void loginGoogle()async{
+    //todo show loading
+    CustomDialog.showLoading(
+      context: context,
+      background: Theme.of(context).scaffoldBackgroundColor,
+      text: 'loading'.tr(),
+      style: Theme.of(context).textTheme.headlineSmall,
+    );
+    try {
+      final GoogleSignInAccount? googleUser =
+          await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        //todo hide loading
+        CustomDialog.hideLoading(context: context);
+        return;
+      }
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.idToken,
+        idToken: googleAuth.idToken,
+      );
+      FirebaseAuth.instance.signInWithCredential(credential);
+      var userModel = UserModel(
+        id: googleUser.id,
+        name: googleUser.displayName!,
+        email: googleUser.email,
+      );
+      FirebaseUtilsRemote().addUserToFirebase(userModel);
+      var userProvider = Provider.of<UserProvider>(context,listen: false);
+      var eventProvider = Provider.of<EventProvider>(context,listen: false);
+      userProvider.changeCurrentUser(userModel);
+      eventProvider.changeIndex(0, userProvider.currentUser!.id);
+      eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
+
+      debugPrint('---------------------------------------');
+      debugPrint('Name: ${googleUser.displayName ?? ""}');
+      debugPrint('UID: ${googleUser.id}');
+      debugPrint('Email: ${googleUser.email}');
+      debugPrint('---------------------------------------');
+      //todo hide loading
+      CustomDialog.hideLoading(context: context);
+      //todo show message successfully
+      CustomDialog.showMessage(
+        context: context,
+        background: Theme.of(context).scaffoldBackgroundColor,
+        styleMessage: Theme.of(
+          context,
+        ).textTheme.headlineSmall,
+        message: 'login_successfully'.tr(),
+        title: 'successfully'.tr(),
+        posActionName: 'ok'.tr(),
+        posActionClick: () {
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoute.dashBoardRouteName,
+          );
+        },
+      );
+    } on Exception catch (e) {
+      //todo hide loading
+      CustomDialog.hideLoading(context: context);
+      //todo show message error
+      CustomDialog.showMessage(
+        context: context,
+        background: Theme.of(context).scaffoldBackgroundColor,
+        styleMessage: Theme.of(
+          context,
+        ).textTheme.headlineSmall,
+        title: 'error'.tr(),
+        message: e.toString(),
+        posActionName: 'ok'.tr(),
+      );
+    }
   }
 }

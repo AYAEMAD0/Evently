@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/dashboard/tabs/home/widget/event_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,11 +22,12 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   List<EventModel> eventsModel = EventModel.events;
   late EventProvider event;
+  late UserProvider userProvider;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      event.getAllEvent();
+      event.getAllEvent(userProvider.currentUser!.id);
     });
   }
 
@@ -35,6 +37,7 @@ class _HomeTabState extends State<HomeTab> {
     double width = MediaQuery.of(context).size.width;
     var theme = Provider.of<ThemeProvider>(context);
     event = Provider.of<EventProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
 
     return SafeArea(
       child: Column(
@@ -70,7 +73,7 @@ class _HomeTabState extends State<HomeTab> {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
-                          "Aya Emad",
+                          userProvider.currentUser!.name  ,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -134,7 +137,7 @@ class _HomeTabState extends State<HomeTab> {
                     indicatorColor: AppColor.transparentColor,
                     dividerColor: AppColor.transparentColor,
                     onTap: (value) {
-                      event.changeIndex(value);
+                      event.changeIndex(value,userProvider.currentUser!.id);
                     },
                     tabs: List.generate(
                       eventsModel.length,

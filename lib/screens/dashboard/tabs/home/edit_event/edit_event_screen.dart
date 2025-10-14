@@ -9,6 +9,7 @@ import 'package:evently/firebase/local/firebase_utils.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/language_provider/language_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/widget/choose_event_location.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/widget/event_category_with_image.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/widget/event_date_and_time.dart';
@@ -35,6 +36,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
   String? imageLightEvent, imageDarkEvent, nameEvent;
   late EventProvider event;
+  late UserProvider userProvider;
   late EventModelFire eventModel;
   bool isDataInitialized = false;
   void initializeData() {
@@ -67,6 +69,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     double width = MediaQuery.of(context).size.width;
     var language = Provider.of<LanguageProvider>(context);
     event = Provider.of<EventProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     eventModel = ModalRoute.of(context)!.settings.arguments as EventModelFire;
     if (!isDataInitialized) {
       initializeData();
@@ -243,23 +246,32 @@ class _EditEventScreenState extends State<EditEventScreen> {
         descEvent: descController.text,
         dateEvent: selectedDate!,
         timeEvent: selectedTime!.format(context),
-      ),
-    ).timeout(
-      Duration(seconds: 1),
-      onTimeout: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(CustomSnackbar.show("event_edited"));
-        Navigator.popUntil(context, (route) {
-          return route.settings.name == AppRoute.dashBoardRouteName;
-        });
-      },
-    );
+      ),userProvider.currentUser!.id,
+    ).then((value) {
+      ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(CustomSnackbar.show("event_edited"));
+            Navigator.popUntil(context, (route) {
+              return route.settings.name == AppRoute.dashBoardRouteName;
+            });
+
+    },);
+        //.timeout(
+    //   Duration(seconds: 1),
+    //   onTimeout: () {
+    //     ScaffoldMessenger.of(
+    //       context,
+    //     ).showSnackBar(CustomSnackbar.show("event_edited"));
+    //     Navigator.popUntil(context, (route) {
+    //       return route.settings.name == AppRoute.dashBoardRouteName;
+    //     });
+    //   },
+    //);
   }
 
   @override
   void dispose() {
-    event.changeIndex(event.selectedIndex);
+    event.changeIndex(event.selectedIndex,userProvider.currentUser!.id);
     titleController.dispose();
     descController.dispose();
     super.dispose();

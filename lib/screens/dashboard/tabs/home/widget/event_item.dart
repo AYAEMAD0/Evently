@@ -4,6 +4,7 @@ import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ class _EventItemState extends State<EventItem> {
     double width = MediaQuery.of(context).size.width;
     var isDark = Provider.of<ThemeProvider>(context).isDark();
     var eventProvider = Provider.of<EventProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     return Container(
       height: height * 0.33,
       decoration: BoxDecoration(
@@ -91,7 +93,7 @@ class _EventItemState extends State<EventItem> {
                   IconButton(
                     onPressed: () {
                       //todo update fav
-                      eventProvider.updateFavouriteEvent(widget.model, context);
+                      eventProvider.updateFavouriteEvent(widget.model, context,userProvider.currentUser!.id);
                     },
                     icon: Icon(
                       widget.model.isFavourite == true

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/app_style.dart';
@@ -19,17 +20,19 @@ class _FavouriteTabState extends State<FavouriteTab> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      eventProvider.getAllFavouriteEvent();
+      eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
     });
     super.initState();
   }
 
   late EventProvider eventProvider;
+  late UserProvider userProvider;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     eventProvider = Provider.of<EventProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(
