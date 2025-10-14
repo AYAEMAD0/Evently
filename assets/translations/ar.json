@@ -57,6 +57,7 @@
   "location": "الموقع",
   "choose_event_location": "اختر موقع الحدث",
   "add_event": "إضافة حدث",
+  "event_details": "تفاصيل الحدث",
   "edit_event": "تعديل الحدث",
   "update_event": "تحديث الحدث",
   "name_required": "الاسم مطلوب",
@@ -73,17 +74,16 @@
   "time_required": "الوقت مطلوب",
   "event_added": "تمت إضافة",
   "no_events_yet": "لم يتم إضافة أي حدث بعد",
-  "loading": "جارٍ التحميل..",
-  "successfully": "تم بنجاح",
-  "login_successfully": "تم تسجيل الدخول بنجاح",
-  "ok": "حسناً",
-  "email_not_verified": "البريد الإلكتروني غير مُفعل",
-  "verify_email_message": "لم يتم تفعيل بريدك الإلكتروني بعد. تم إرسال رسالة تحقق جديدة إلى",
-  "verify_logging": "يرجى التحقق قبل تسجيل الدخول.",
-  "error": "خطأ",
-  "verification_email_sent": "تم إرسال رسالة تحقق إلى",
-  "check_inbox": "يرجى التحقق من صندوق الوارد وتفعيل حسابك قبل تسجيل الدخول.",
-  "weak_password": "كلمة المرور التي أدخلتها ضعيفة جداً.",
-  "email_already_exists": "يوجد حساب بالفعل بهذا البريد الإلكتروني."
+  "event_edited": "تم تعديل الحدث",
+  "delete_event": "حذف الحدث",
+  "delete_event_confirmation": "هل أنت متأكد أنك تريد حذف الحدث؟",
+  "cancel": "إلغاء",
+  "ok": "موافق",
+  "event_deleted": "تم حذف الحدث",
+  "event_update": "تم تحديث الحدث",
+  "no_favourite_event": "لا توجد أحداث مفضلة بعد"
+
+
+
 
 }
