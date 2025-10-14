@@ -8,6 +8,7 @@ import 'package:evently/core/utils/custom_dialog.dart';
 import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/core/widget/custom_toggle_language.dart';
+import 'package:evently/firebase/remote/firebase_utils_remote.dart';
 import 'package:evently/screens/auth/widget/already_and_donot_have_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -164,121 +165,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   SizedBox(height: 0.024 * height),
                   CustomButton(
-                    onPressed: () async {
+                    onPressed: () {
                       //todo logic signup
-                      if (formKey.currentState!.validate()) {
-                        //todo show loading
-                        CustomDialog.showLoading(
-                          context: context,
-                          background: Theme.of(context).scaffoldBackgroundColor,
-                          text: 'loading'.tr(),
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        );
-                        try {
-                          var credential = await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
-                          var user = FirebaseAuth.instance.currentUser;
-
-                          if (user != null) {
-                            await user.updateDisplayName(
-                              nameController.text.trim(),
-                            );
-                            await user.reload();
-                            user = FirebaseAuth.instance.currentUser;
-                            await user!.sendEmailVerification();
-                            var userModel = UserModel(
-                              id: user.uid,
-                              name: user.displayName ?? "",
-                              email: user.email ?? "",
-                            );
-
-                            userProvider.changeCurrentUser(userModel);
-
-                            print('---------------------------------------');
-                            print('Name: ${user.displayName}');
-                            print('UID: ${user.uid}');
-                            print('Email: ${user.email}');
-                            print('---------------------------------------');
-
-
-                          //todo hide loading
-                          CustomDialog.hideLoading(context: context);
-                          //todo show message successfully
-                          CustomDialog.showMessage(
-                            context: context,
-                            background: Theme.of(
-                              context,
-                            ).scaffoldBackgroundColor,
-                            styleMessage: Theme.of(
-                              context,
-                            ).textTheme.headlineSmall,
-                            message:
-                                '${'verification_email_sent'.tr()} ${emailController.text} ${"check_inbox".tr()}',
-                            title: 'successfully'.tr(),
-                            posActionName: 'ok'.tr(),
-                            posActionClick: () {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                AppRoute.loginRouteName,
-                              );
-                            },
-                          );
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            //todo hide loading
-                            CustomDialog.hideLoading(context: context);
-                            //todo show message error
-                            CustomDialog.showMessage(
-                              context: context,
-                              background: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              styleMessage: Theme.of(
-                                context,
-                              ).textTheme.headlineSmall,
-                              title: 'error'.tr(),
-                              message: "weak_password".tr(),
-                              posActionName: 'Ok',
-                            );
-                          } else if (e.code == 'email-already-in-use') {
-                            //todo hide loading
-                            CustomDialog.hideLoading(context: context);
-                            //todo show message error
-                            CustomDialog.showMessage(
-                              context: context,
-                              background: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              styleMessage: Theme.of(
-                                context,
-                              ).textTheme.headlineSmall,
-                              title: 'error'.tr(),
-                              message: "email_already_exists".tr(),
-                              posActionName: 'ok'.tr(),
-                            );
-                          }
-                        } catch (e) {
-                          //todo hide loading
-                          CustomDialog.hideLoading(context: context);
-                          //todo show message error
-                          CustomDialog.showMessage(
-                            context: context,
-                            background: Theme.of(
-                              context,
-                            ).scaffoldBackgroundColor,
-                            styleMessage: Theme.of(
-                              context,
-                            ).textTheme.headlineSmall,
-                            title: 'error'.tr(),
-                            message: e.toString(),
-                            posActionName: 'ok'.tr(),
-                          );
-                        }
-                      }
+                      signup();
                     },
                     backgroundColor: AppColor.primaryColor,
                     text: 'create_account'.tr(),
@@ -305,5 +194,94 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  void signup() async {
+    if (formKey.currentState!.validate()) {
+      //todo show loading
+      CustomDialog.showLoading(
+        context: context,
+        background: Theme.of(context).scaffoldBackgroundColor,
+        text: 'loading'.tr(),
+        style: Theme.of(context).textTheme.headlineSmall,
+      );
+      try {
+        var credential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+            );
+        var user = credential.user;
+        await user!.sendEmailVerification();
+        var userModel = UserModel(
+          id: user.uid,
+          name: nameController.text,
+          email: emailController.text,
+        );
+        await FirebaseUtilsRemote().addUserToFirebase(userModel);
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.changeCurrentUser(userModel);
+
+        print('---------------------------------------');
+        print('Name: ${nameController.text}');
+        print('UID: ${user.uid}');
+        print('Email: ${emailController.text}');
+        print('---------------------------------------');
+
+        //todo hide loading
+        CustomDialog.hideLoading(context: context);
+        //todo show message successfully
+        CustomDialog.showMessage(
+          context: context,
+          background: Theme.of(context).scaffoldBackgroundColor,
+          styleMessage: Theme.of(context).textTheme.headlineSmall,
+          message:
+              '${'verification_email_sent'.tr()} ${emailController.text} ${"check_inbox".tr()}',
+          title: 'successfully'.tr(),
+          posActionName: 'ok'.tr(),
+          posActionClick: () {
+            Navigator.pushReplacementNamed(context, AppRoute.loginRouteName);
+          },
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          //todo hide loading
+          CustomDialog.hideLoading(context: context);
+          //todo show message error
+          CustomDialog.showMessage(
+            context: context,
+            background: Theme.of(context).scaffoldBackgroundColor,
+            styleMessage: Theme.of(context).textTheme.headlineSmall,
+            title: 'error'.tr(),
+            message: "weak_password".tr(),
+            posActionName: 'Ok',
+          );
+        } else if (e.code == 'email-already-in-use') {
+          //todo hide loading
+          CustomDialog.hideLoading(context: context);
+          //todo show message error
+          CustomDialog.showMessage(
+            context: context,
+            background: Theme.of(context).scaffoldBackgroundColor,
+            styleMessage: Theme.of(context).textTheme.headlineSmall,
+            title: 'error'.tr(),
+            message: "email_already_exists".tr(),
+            posActionName: 'ok'.tr(),
+          );
+        }
+      } catch (e) {
+        //todo hide loading
+        CustomDialog.hideLoading(context: context);
+        //todo show message error
+        CustomDialog.showMessage(
+          context: context,
+          background: Theme.of(context).scaffoldBackgroundColor,
+          styleMessage: Theme.of(context).textTheme.headlineSmall,
+          title: 'error'.tr(),
+          message: e.toString(),
+          posActionName: 'ok'.tr(),
+        );
+      }
+    }
   }
 }

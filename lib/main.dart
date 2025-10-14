@@ -21,7 +21,7 @@ import 'provider/language_provider/language_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  await FirebaseFirestore.instance.disableNetwork();
+  //await FirebaseFirestore.instance.disableNetwork();
   await EasyLocalization.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();

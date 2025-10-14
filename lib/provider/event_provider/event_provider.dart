@@ -12,10 +12,10 @@ class EventProvider extends ChangeNotifier {
 
   int selectedIndex = 0;
 
-  void getAllEvent() async {
+  void getAllEvent(String uid) async {
     //todo: get event
     QuerySnapshot<EventModelFire> query =
-        await FireBaseUtils.getEventCollection().get();
+        await FireBaseUtils.getEventCollection(uid).get();
     //todo: List<EventModelFire>   map  List<QueryDocumentSnapshot<EventModelFire>>
     listAllEvent = query.docs.map((e) => e.data()).toList();
     filterList = listAllEvent;
@@ -26,10 +26,10 @@ class EventProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEvent() async {
+  void getFilterEvent(String uid) async {
     //todo: get event
     QuerySnapshot<EventModelFire> query =
-        await FireBaseUtils.getEventCollection().get();
+        await FireBaseUtils.getEventCollection(uid).get();
     //todo: List<EventModelFire>   map  List<QueryDocumentSnapshot<EventModelFire>>
     listAllEvent = query.docs.map((e) => e.data()).toList();
     //todo: filter event
@@ -45,8 +45,8 @@ class EventProvider extends ChangeNotifier {
   }
 
   //todo: change index for tabs
-  void changeIndex(index) async {
+  void changeIndex(index,String uid) async {
     selectedIndex = index;
-    selectedIndex == 0 ? getAllEvent() : getFilterEvent();
+    selectedIndex == 0 ? getAllEvent(uid) : getFilterEvent(uid);
   }
 }

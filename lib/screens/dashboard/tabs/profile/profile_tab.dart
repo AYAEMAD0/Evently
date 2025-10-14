@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
+import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/screens/dashboard/tabs/profile/widget/image_and_name_and_email.dart';
@@ -100,6 +101,7 @@ class ProfileTab extends StatelessWidget {
             CustomButton(
               onPressed: () {
                 //todo logout button
+                Navigator.pushNamedAndRemoveUntil(context, AppRoute.loginRouteName, (route) => false,);
               },
               backgroundColor: AppColor.redColor,
               isIcon: true,
