@@ -2,26 +2,36 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/firebase/model/event_model_fire.dart';
+import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/theme_provider/theme_provider.dart';
+import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EventItem extends StatelessWidget {
+class EventItem extends StatefulWidget {
   const EventItem({super.key, required this.model});
   final EventModelFire model;
+
+  @override
+  State<EventItem> createState() => _EventItemState();
+}
+
+class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     var isDark = Provider.of<ThemeProvider>(context).isDark();
+    var eventProvider = Provider.of<EventProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     return Container(
-      height: height * 0.34,
+      height: height * 0.33,
       decoration: BoxDecoration(
         border: Border.all(color: AppColor.primaryColor, width: 1.2),
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: AssetImage(
-            isDark ? model.imageDarkEvent :  model.imageLightEvent,
+            isDark ? widget.model.imageDarkEvent : widget.model.imageLightEvent,
           ),
           fit: BoxFit.fill,
         ),
@@ -48,14 +58,14 @@ class EventItem extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "${model.dateEvent.day}",
+                    "${widget.model.dateEvent.day}",
                     textAlign: TextAlign.center,
-                    style: AppStyle.bold20PrimaryLight,
+                    style: AppStyle.bold18PrimaryLight,
                   ),
                   Text(
-                    DateFormat('MMM').format(model.dateEvent),
+                    DateFormat('MMM').format(widget.model.dateEvent),
                     textAlign: TextAlign.center,
-                    style: AppStyle.bold20PrimaryLight,
+                    style: AppStyle.bold18PrimaryLight,
                   ),
                 ],
               ),
@@ -63,7 +73,7 @@ class EventItem extends StatelessWidget {
             //desc
             Container(
               padding: EdgeInsets.symmetric(
-                vertical: height * 0.016,
+                vertical: height * 0.003,
                 horizontal: width * 0.02,
               ),
               decoration: BoxDecoration(
@@ -76,11 +86,22 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      model.descEvent,
+                      widget.model.descEvent,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),
-                  Icon(Icons.favorite_outlined, color: AppColor.primaryColor),
+                  IconButton(
+                    onPressed: () {
+                      //todo update fav
+                      eventProvider.updateFavouriteEvent(widget.model, context,userProvider.currentUser!.id);
+                    },
+                    icon: Icon(
+                      widget.model.isFavourite == true
+                          ? Icons.favorite
+                          : Icons.favorite_outline,
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
                 ],
               ),
             ),

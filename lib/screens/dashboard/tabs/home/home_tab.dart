@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
+import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/dashboard/tabs/home/widget/event_category.dart';
@@ -186,7 +187,12 @@ class _HomeTabState extends State<HomeTab> {
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.025,
                         ),
-                        child: EventItem(model: event.filterList[index]),
+                        child: InkWell(
+                            onTap: (){
+                              //todo nav details
+                              Navigator.pushNamed(context, AppRoute.detailsEventRouteName,arguments: event.filterList[index]);
+                            },
+                            child: EventItem(model: event.filterList[index])),
                       );
                     },
                   ),

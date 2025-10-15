@@ -146,7 +146,20 @@ class _AddEventTabState extends State<AddEventTab> {
                 SizedBox(height: height * 0.01),
 
                 //location
-                ChooseEventLocation(),
+                Text(
+                  "location".tr(),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                SizedBox(height: height * 0.015),
+                ChooseEventLocation(
+                  onPressed: () {
+                    //todo add location
+                  },
+                  value: Text(
+                    "choose_event_location".tr(),
+                    style: AppStyle.bold16Primary,
+                  ),
+                ),
 
                 SizedBox(height: height * 0.02),
                 //add event
@@ -208,7 +221,7 @@ class _AddEventTabState extends State<AddEventTab> {
     setState(() {});
     if (!formKey.currentState!.validate() || hasError) return;
 
-    FireBaseUtils.addEventTOFireStore(
+    FireBaseUtils.addEventToFireStore(
       EventModelFire(
         imageLightEvent: imageLightEvent!,
         imageDarkEvent: imageDarkEvent!,

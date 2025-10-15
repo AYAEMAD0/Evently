@@ -14,10 +14,26 @@ class FireBaseUtils {
         toFirestore: (value, options) => value.toFirestore());
   }
 
-  static Future<void> addEventTOFireStore(EventModelFire event,String uid) {
+  static Future<void> addEventToFireStore(EventModelFire event,String uid) {
     CollectionReference<EventModelFire> collectionRef = getEventCollection(uid);
     DocumentReference<EventModelFire> docRef = collectionRef.doc();
     event.id = docRef.id;
     return docRef.set(event);
+  }
+  static Future<void> editEventToFireStore(EventModelFire event,String uid) {
+    if (event.id == null || event.id!.isEmpty) {
+      return Future.error("Cannot update event: Event ID is missing.");
+    }
+    CollectionReference<EventModelFire> collectionRef = getEventCollection(uid);
+    DocumentReference<EventModelFire> docRef = collectionRef.doc(event.id);
+    return docRef.update(event.toFirestore());
+  }
+  static Future<void> deleteEventToFireStore(EventModelFire event,String uid) {
+    if (event.id == null || event.id!.isEmpty) {
+      return Future.error("Cannot update event: Event ID is missing.");
+    }
+    CollectionReference<EventModelFire> collectionRef = getEventCollection(uid);
+    DocumentReference<EventModelFire> docRef = collectionRef.doc(event.id);
+    return docRef.delete();
   }
 }

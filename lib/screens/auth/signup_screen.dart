@@ -47,7 +47,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("register".tr(), style: AppStyle.medium20Primary),
@@ -222,11 +221,11 @@ class _SignupScreenState extends State<SignupScreen> {
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.changeCurrentUser(userModel);
 
-        print('---------------------------------------');
-        print('Name: ${nameController.text}');
-        print('UID: ${user.uid}');
-        print('Email: ${emailController.text}');
-        print('---------------------------------------');
+        debugPrint('---------------------------------------');
+        debugPrint('Name: ${nameController.text}');
+        debugPrint('UID: ${user.uid}');
+        debugPrint('Email: ${emailController.text}');
+        debugPrint('---------------------------------------');
 
         //todo hide loading
         CustomDialog.hideLoading(context: context);

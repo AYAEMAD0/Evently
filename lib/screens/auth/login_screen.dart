@@ -8,6 +8,7 @@ import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
 import 'package:evently/core/widget/custom_toggle_language.dart';
 import 'package:evently/firebase/model/user_model.dart';
+import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:evently/screens/auth/widget/already_and_donot_have_account.dart';
 import 'package:evently/screens/auth/widget/built_or_way_login.dart';
@@ -200,6 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
           );
           var userProvider = Provider.of<UserProvider>(context,listen: false);
           userProvider.changeCurrentUser(userFire!);
+          var eventProvider = Provider.of<EventProvider>(context,listen: false);
+          eventProvider.changeIndex(0, userProvider.currentUser!.id);
+          eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
 
 
           //todo hide loading
@@ -280,12 +284,16 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       FirebaseUtilsRemote().addUserToFirebase(userModel);
       var userProvider = Provider.of<UserProvider>(context,listen: false);
+      var eventProvider = Provider.of<EventProvider>(context,listen: false);
       userProvider.changeCurrentUser(userModel);
-      print('---------------------------------------');
-      print('Name: ${googleUser.displayName ?? ""}');
-      print('UID: ${googleUser.id}');
-      print('Email: ${googleUser.email ?? ""}');
-      print('---------------------------------------');
+      eventProvider.changeIndex(0, userProvider.currentUser!.id);
+      eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
+
+      debugPrint('---------------------------------------');
+      debugPrint('Name: ${googleUser.displayName ?? ""}');
+      debugPrint('UID: ${googleUser.id}');
+      debugPrint('Email: ${googleUser.email}');
+      debugPrint('---------------------------------------');
       //todo hide loading
       CustomDialog.hideLoading(context: context);
       //todo show message successfully

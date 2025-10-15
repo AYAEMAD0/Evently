@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
@@ -10,6 +9,8 @@ import 'package:evently/screens/auth/login_screen.dart';
 import 'package:evently/screens/auth/signup_screen.dart';
 import 'package:evently/screens/dashboard/dashboard_screen.dart';
 import 'package:evently/screens/dashboard/tabs/add_event/add_event_tab.dart';
+import 'package:evently/screens/dashboard/tabs/home/details_event/details_event_screen.dart';
+import 'package:evently/screens/dashboard/tabs/home/edit_event/edit_event_screen.dart';
 import 'package:evently/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,8 @@ class MyApp extends StatelessWidget {
         AppRoute.signupRouteName: (context) => SignupScreen(),
         AppRoute.forgetPasswordRouteName: (context) => ForgetPasswordScreen(),
         AppRoute.addEventRouteName: (context) => AddEventTab(),
+        AppRoute.detailsEventRouteName: (context) => DetailsEventScreen(),
+        AppRoute.editEventRouteName: (context) => EditEventScreen(),
       },
       initialRoute: AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,

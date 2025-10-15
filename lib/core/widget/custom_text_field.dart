@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboard;
   final bool? obscure;
   final String? obscureCharacter;
-
+  final void Function(String)? onChanged;
   const CustomTextField({
     super.key,
     required this.textStyle,
@@ -41,8 +41,9 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.suffixIconColor,
     this.prefixIconColor,
-    this.obscure=false,
+    this.obscure = false,
     this.obscureCharacter,
+    this.onChanged,
   });
 
   @override
@@ -53,9 +54,10 @@ class CustomTextField extends StatelessWidget {
       style: textStyle,
       controller: controller,
       validator: validator,
+      onChanged: onChanged,
       autofocus: false,
       obscureText: obscure!,
-      obscuringCharacter:obscureCharacter??"*" ,
+      obscuringCharacter: obscureCharacter ?? "*",
       maxLines: maxLines,
       cursorColor: AppColor.primaryColor,
       cursorHeight: height * 0.025,
@@ -85,13 +87,10 @@ class CustomTextField extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder builtBorder([Color colorBorder=AppColor.redColor]) {
+  OutlineInputBorder builtBorder([Color colorBorder = AppColor.redColor]) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(
-        color: colorBorder ,
-        width: 1.1,
-      ),
+      borderSide: BorderSide(color: colorBorder, width: 1.1),
     );
   }
 }
