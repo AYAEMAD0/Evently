@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/helper/validator_helper.dart';
 import 'package:evently/core/utils/app_asset.dart';
@@ -9,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../core/utils/app_route.dart';
 import '../../core/utils/custom_dialog.dart';
+import '../../firebase/model/user_model.dart';
+import '../../firebase/remote/firebase_utils_remote.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -96,15 +99,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       );
 
       try {
-        final signInMethods = await FirebaseAuth.instance
-            .fetchSignInMethodsForEmail(email);
-        debugPrint('-----------------------------------------');
-        debugPrint(signInMethods.toString());
-        debugPrint('-----------------------------------------');
-        if (signInMethods.isEmpty) {
+        //todo check email is signup or not
+        var users = await FirebaseFirestore.instance
+            .collection(UserModel.collectionName)
+            .where('email', isEqualTo: emailController.text)
+            .get();
+
+        if (users.docs.isEmpty) {
           //todo hide loading
           CustomDialog.hideLoading(context: context);
-          //todo show message error
+          //todo show message email not registered
           CustomDialog.showMessage(
             context: context,
             background: Theme.of(context).scaffoldBackgroundColor,
@@ -115,8 +119,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           );
           return;
         }
-
-        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
         //todo hide loading
         CustomDialog.hideLoading(context: context);
         //todo show message successfully

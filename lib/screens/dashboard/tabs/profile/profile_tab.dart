@@ -22,6 +22,7 @@ class ProfileTab extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
+        leadingWidth: 0,
         toolbarHeight: height * 0.23,
         shape: RoundedRectangleBorder(
           borderRadius: language.isEnglishLanguage()

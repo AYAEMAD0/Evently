@@ -14,7 +14,6 @@ class ImageAndNameAndEmail extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     var userProvider = Provider.of<UserProvider>(context);
     return  Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Image.asset(
           AppAsset.routeImage,
