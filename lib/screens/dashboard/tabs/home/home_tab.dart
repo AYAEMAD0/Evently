@@ -27,7 +27,11 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      event.getAllEvent(userProvider.currentUser!.id);
+      event = Provider.of<EventProvider>(context, listen: false);
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+      if (userProvider.currentUser != null) {
+        event.getAllEvent(userProvider.currentUser!.id);
+      }
     });
   }
 
@@ -38,6 +42,12 @@ class _HomeTabState extends State<HomeTab> {
     var theme = Provider.of<ThemeProvider>(context);
     event = Provider.of<EventProvider>(context);
     userProvider = Provider.of<UserProvider>(context);
+
+    if (userProvider.currentUser == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColor.primaryColor),
+      );
+    }
 
     return SafeArea(
       child: Column(
@@ -73,7 +83,7 @@ class _HomeTabState extends State<HomeTab> {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
-                          userProvider.currentUser!.name  ,
+                          userProvider.currentUser!.name,
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
@@ -137,7 +147,7 @@ class _HomeTabState extends State<HomeTab> {
                     indicatorColor: AppColor.transparentColor,
                     dividerColor: AppColor.transparentColor,
                     onTap: (value) {
-                      event.changeIndex(value,userProvider.currentUser!.id);
+                      event.changeIndex(value, userProvider.currentUser!.id);
                     },
                     tabs: List.generate(
                       eventsModel.length,
@@ -188,11 +198,16 @@ class _HomeTabState extends State<HomeTab> {
                           horizontal: width * 0.025,
                         ),
                         child: InkWell(
-                            onTap: (){
-                              //todo nav details
-                              Navigator.pushNamed(context, AppRoute.detailsEventRouteName,arguments: event.filterList[index]);
-                            },
-                            child: EventItem(model: event.filterList[index])),
+                          onTap: () {
+                            //todo nav details
+                            Navigator.pushNamed(
+                              context,
+                              AppRoute.detailsEventRouteName,
+                              arguments: event.filterList[index],
+                            );
+                          },
+                          child: EventItem(model: event.filterList[index]),
+                        ),
                       );
                     },
                   ),

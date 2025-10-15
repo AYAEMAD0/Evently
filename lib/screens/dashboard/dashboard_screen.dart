@@ -5,6 +5,9 @@ import 'package:evently/screens/dashboard/tabs/home/home_tab.dart';
 import 'package:evently/screens/dashboard/tabs/map/map_tab.dart';
 import 'package:evently/screens/dashboard/tabs/profile/profile_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/user_provider/user_provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,6 +17,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<UserProvider>(context, listen: false).initUser();
+    });
+  }
+
   int selectedIndex = 0;
 
   final List<IconData> iconSelected = [
