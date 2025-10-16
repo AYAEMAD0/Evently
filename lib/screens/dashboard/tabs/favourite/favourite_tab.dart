@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/widget/custom_text_field.dart';
+import 'package:evently/firebase/model/event_model_fire.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
 import 'package:evently/provider/user_provider/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,17 @@ class _FavouriteTabState extends State<FavouriteTab> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
+      setState(() {
+        searchList=eventProvider.filterFavouriteList;
+      });
     });
     super.initState();
   }
 
   late EventProvider eventProvider;
   late UserProvider userProvider;
+  late List<EventModelFire>searchList=[];
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -49,13 +55,22 @@ class _FavouriteTabState extends State<FavouriteTab> {
               borderColor: AppColor.primaryColor,
               prefixIconColor: AppColor.primaryColor,
               prefixIcon: Icon(Icons.search),
-              onChanged: (favSearch) {
-                //todo search event fav
+              onChanged: (valueSearch) {
+                //todo search to title event fav
+                var favSearch=valueSearch.toLowerCase().trim();
+                if(favSearch.isEmpty){
+                  searchList=eventProvider.filterFavouriteList;
+                }else{
+                  searchList=eventProvider.filterFavouriteList.where(
+                    (event) => event.titleEvent.toLowerCase().contains(favSearch)
+                  ).toList();
+                }
+                setState(() {});
               },
               fillColor: AppColor.transparentColor,
             ),
             Expanded(
-              child: eventProvider.filterFavouriteList.isEmpty
+              child: searchList.isEmpty
                   ? Center(
                       child: Text(
                         'no_favourite_event'.tr(),
@@ -66,10 +81,10 @@ class _FavouriteTabState extends State<FavouriteTab> {
                       padding: EdgeInsets.only(top: height * 0.019),
                       separatorBuilder: (context, index) =>
                           SizedBox(height: height * 0.019),
-                      itemCount: eventProvider.filterFavouriteList.length,
+                      itemCount: searchList.length,
                       itemBuilder: (context, index) {
                         return EventItem(
-                          model: eventProvider.filterFavouriteList[index],
+                          model:  searchList[index]
                         );
                       },
                     ),

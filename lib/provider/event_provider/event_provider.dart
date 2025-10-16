@@ -51,9 +51,9 @@ class EventProvider extends ChangeNotifier {
     selectedIndex == 0 ? getAllEvent(uid) : getFilterEvent(uid);
   }
 
-  void updateFavouriteEvent(EventModelFire event, BuildContext context,String uid) {
+  void updateFavouriteEvent(EventModelFire event, BuildContext context,String uid) async{
     //todo: update favourite event
-    FireBaseUtils.getEventCollection(uid)
+    await FireBaseUtils.getEventCollection(uid)
         .doc(event.id)
         .update({'isFavourite': !event.isFavourite})
     .then((value) {
@@ -61,7 +61,7 @@ class EventProvider extends ChangeNotifier {
               context,
             ).showSnackBar(CustomSnackbar.show('event_update'));
     },);
-        // .timeout(
+    // .timeout(
         //   Duration(milliseconds: 500),
         //   onTimeout: () {
         //     ScaffoldMessenger.of(

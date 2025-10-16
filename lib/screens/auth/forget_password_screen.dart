@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import '../../core/utils/app_route.dart';
 import '../../core/utils/custom_dialog.dart';
 import '../../firebase/model/user_model.dart';
-import '../../firebase/remote/firebase_utils_remote.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
