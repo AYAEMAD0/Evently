@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/core/helper/shared_check_helper.dart';
 import 'package:evently/core/helper/validator_helper.dart';
 import 'package:evently/core/utils/app_asset.dart';
 import 'package:evently/core/utils/app_color.dart';
@@ -204,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
           var eventProvider = Provider.of<EventProvider>(context,listen: false);
           eventProvider.changeIndex(0, userProvider.currentUser!.id);
           eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
-
+          await SharedCheckHelper.setLogin(true);
 
           //todo hide loading
           CustomDialog.hideLoading(context: context);
@@ -288,6 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
       userProvider.changeCurrentUser(userModel);
       eventProvider.changeIndex(0, userProvider.currentUser!.id);
       eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
+      await SharedCheckHelper.setLogin(true);
 
       debugPrint('---------------------------------------');
       debugPrint('Name: ${googleUser.displayName ?? ""}');

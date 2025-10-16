@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/core/helper/shared_check_helper.dart';
 import 'package:evently/core/utils/app_asset.dart';
 import 'package:evently/core/utils/app_color.dart';
 import 'package:evently/core/utils/app_route.dart';
@@ -72,7 +73,9 @@ class _OnboardingOtherState extends State<OnboardingOther> {
                 ? Alignment.bottomRight
                 : Alignment.bottomLeft,
           ),
-          onDone: () {
+          onDone: () async{
+            await SharedCheckHelper.setOnBoarding(true);
+            await Future.delayed(Duration(milliseconds: 300));
             Navigator.pushReplacementNamed(context, AppRoute.loginRouteName);
           },
           showDoneButton: true,

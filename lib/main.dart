@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently/core/helper/shared_check_helper.dart';
 import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_theme.dart';
 import 'package:evently/provider/event_provider/event_provider.dart';
@@ -15,20 +16,23 @@ import 'package:evently/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'provider/language_provider/language_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   //await FirebaseFirestore.instance.disableNetwork();
   await EasyLocalization.ensureInitialized();
+  await SharedCheckHelper.init();
+  final bool onboarding = await SharedCheckHelper.getOnBoarding();
+  final bool login = await SharedCheckHelper.getLogin();
+  final bool isDark = await SharedCheckHelper.getTheme();
+  final bool isEnglish = await SharedCheckHelper.getLanguage();
 
-  final prefs = await SharedPreferences.getInstance();
-  final bool isDark = prefs.getBool('isDark') ?? false;
-  final bool isEnglish= prefs.getBool('isEnglish') ?? true;
-  final Locale startedLocale = isEnglish ? const Locale('en') : const Locale('ar');
+  final Locale startedLocale = isEnglish
+      ? const Locale('en')
+      : const Locale('ar');
 
   runApp(
     EasyLocalization(
@@ -38,28 +42,21 @@ void main() async {
       fallbackLocale: const Locale('en'),
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (_) => ThemeProvider(isDark),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => LanguageProvider(isEnglish),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => EventProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => UserProvider(),
-          ),
+          ChangeNotifierProvider(create: (_) => ThemeProvider(isDark)),
+          ChangeNotifierProvider(create: (_) => LanguageProvider(isEnglish)),
+          ChangeNotifierProvider(create: (_) => EventProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
         ],
-        child: const MyApp(),
+        child: MyApp(isOnboarding: onboarding, isLogin: login),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.isOnboarding, required this.isLogin});
+  final bool isOnboarding;
+  final bool isLogin;
   @override
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context);
@@ -75,7 +72,11 @@ class MyApp extends StatelessWidget {
         AppRoute.detailsEventRouteName: (context) => DetailsEventScreen(),
         AppRoute.editEventRouteName: (context) => EditEventScreen(),
       },
-      initialRoute: AppRoute.onBoardingRouteName,
+      initialRoute: isOnboarding
+          ? isLogin
+                ? AppRoute.dashBoardRouteName
+                : AppRoute.loginRouteName
+          : AppRoute.onBoardingRouteName,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

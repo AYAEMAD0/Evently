@@ -1,3 +1,4 @@
+import 'package:evently/core/helper/shared_check_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,8 +15,7 @@ class ThemeProvider extends ChangeNotifier {
     } else {
       themeApp = newTheme;
     }
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDark', isDark());
+    SharedCheckHelper.setTheme(isDark());
     notifyListeners();
   }
 
