@@ -18,20 +18,8 @@ class FavouriteTab extends StatefulWidget {
 
 class _FavouriteTabState extends State<FavouriteTab> {
   TextEditingController searchController = TextEditingController();
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      eventProvider.getAllFavouriteEvent(userProvider.currentUser!.id);
-      setState(() {
-        searchList=eventProvider.filterFavouriteList;
-      });
-    });
-    super.initState();
-  }
-
   late EventProvider eventProvider;
   late UserProvider userProvider;
-  late List<EventModelFire>searchList=[];
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +27,12 @@ class _FavouriteTabState extends State<FavouriteTab> {
     double width = MediaQuery.of(context).size.width;
     eventProvider = Provider.of<EventProvider>(context);
     userProvider = Provider.of<UserProvider>(context);
+    List<EventModelFire> searchList = searchController.text.isEmpty
+        ? eventProvider.filterFavouriteList
+        : eventProvider.filterFavouriteList.where((event) {
+      final favSearch = searchController.text.toLowerCase().trim();
+      return event.titleEvent.toLowerCase().contains(favSearch);
+    }).toList();
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -57,14 +51,6 @@ class _FavouriteTabState extends State<FavouriteTab> {
               prefixIcon: Icon(Icons.search),
               onChanged: (valueSearch) {
                 //todo search to title event fav
-                var favSearch=valueSearch.toLowerCase().trim();
-                if(favSearch.isEmpty){
-                  searchList=eventProvider.filterFavouriteList;
-                }else{
-                  searchList=eventProvider.filterFavouriteList.where(
-                    (event) => event.titleEvent.toLowerCase().contains(favSearch)
-                  ).toList();
-                }
                 setState(() {});
               },
               fillColor: AppColor.transparentColor,
