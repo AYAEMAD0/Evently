@@ -1,5 +1,5 @@
+import 'package:evently/core/helper/shared_check_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageProvider extends ChangeNotifier {
   late Locale languageApp;
@@ -14,8 +14,7 @@ class LanguageProvider extends ChangeNotifier {
     } else {
       languageApp = newLocale;
     }
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isEnglish', isEnglishLanguage());
+    SharedCheckHelper.setLanguage(isEnglishLanguage());
     notifyListeners();
   }
 

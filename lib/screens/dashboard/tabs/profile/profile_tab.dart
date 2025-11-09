@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/core/utils/app_color.dart';
+import 'package:evently/core/utils/app_route.dart';
 import 'package:evently/core/utils/app_style.dart';
 import 'package:evently/core/widget/custom_button.dart';
 import 'package:evently/screens/dashboard/tabs/profile/widget/image_and_name_and_email.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/helper/shared_check_helper.dart';
 import '../../../../provider/language_provider/language_provider.dart';
 import '../../../../provider/theme_provider/theme_provider.dart';
 import 'widget/custom_drop_menu.dart';
@@ -21,6 +23,7 @@ class ProfileTab extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
+        leadingWidth: 0,
         toolbarHeight: height * 0.23,
         shape: RoundedRectangleBorder(
           borderRadius: language.isEnglishLanguage()
@@ -98,8 +101,11 @@ class ProfileTab extends StatelessWidget {
             ),
             Spacer(),
             CustomButton(
-              onPressed: () {
+              onPressed: () async{
                 //todo logout button
+                await SharedCheckHelper.setLogin(false);
+                await Future.delayed(Duration(milliseconds: 300));
+                Navigator.pushNamedAndRemoveUntil(context, AppRoute.loginRouteName, (route) => false,);
               },
               backgroundColor: AppColor.redColor,
               isIcon: true,

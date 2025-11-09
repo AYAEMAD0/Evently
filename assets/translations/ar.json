@@ -57,6 +57,7 @@
   "location": "الموقع",
   "choose_event_location": "اختر موقع الحدث",
   "add_event": "إضافة حدث",
+  "event_details": "تفاصيل الحدث",
   "edit_event": "تعديل الحدث",
   "update_event": "تحديث الحدث",
   "name_required": "الاسم مطلوب",
@@ -71,19 +72,35 @@
   "description_required": "الوصف مطلوب",
   "date_required": "التاريخ مطلوب",
   "time_required": "الوقت مطلوب",
-  "event_added": "تمت إضافة",
-  "no_events_yet": "لم يتم إضافة أي حدث بعد",
-  "loading": "جارٍ التحميل..",
+  "loading": "جاري التحميل..",
   "successfully": "تم بنجاح",
   "login_successfully": "تم تسجيل الدخول بنجاح",
-  "ok": "حسناً",
   "email_not_verified": "البريد الإلكتروني غير مُفعل",
-  "verify_email_message": "لم يتم تفعيل بريدك الإلكتروني بعد. تم إرسال رسالة تحقق جديدة إلى",
-  "verify_logging": "يرجى التحقق قبل تسجيل الدخول.",
+  "verify_email_message": "بريدك الإلكتروني لم يتم تفعيله بعد. تم إرسال رسالة تحقق جديدة إلى",
+  "verify_logging": "يرجى التحقق من البريد قبل تسجيل الدخول.",
   "error": "خطأ",
   "verification_email_sent": "تم إرسال رسالة تحقق إلى",
-  "check_inbox": "يرجى التحقق من صندوق الوارد وتفعيل حسابك قبل تسجيل الدخول.",
-  "weak_password": "كلمة المرور التي أدخلتها ضعيفة جداً.",
-  "email_already_exists": "يوجد حساب بالفعل بهذا البريد الإلكتروني."
+  "check_inbox": "يرجى فحص البريد الوارد وتفعيل حسابك قبل تسجيل الدخول.",
+  "weak_password": "كلمة المرور ضعيفة جدًا.",
+  "email_already_exists": "يوجد حساب بالفعل بهذا البريد الإلكتروني.",
+"event_added": "تمت إضافة",
+  "no_events_yet": "لم يتم إضافة أي حدث بعد",
+  "event_edited": "تم تعديل الحدث",
+  "delete_event": "حذف الحدث",
+  "delete_event_confirmation": "هل أنت متأكد أنك تريد حذف الحدث؟",
+  "cancel": "إلغاء",
+  "ok": "موافق",
+  "event_deleted": "تم حذف الحدث",
+  "event_update": "تم تحديث الحدث",
+  "no_favourite_event": "لا توجد أحداث مفضلة بعد",
+  "email_not_registered": "هذا البريد الإلكتروني غير مسجل. يرجى التسجيل أولاً.",
+  "password_reset_sent": "تم إرسال رابط إعادة تعيين كلمة المرور. تحقق من بريدك الإلكتروني.",
+  "user_not_found": "لا يوجد مستخدم بهذا البريد الإلكتروني.",
+  "invalid_email": "عنوان البريد الإلكتروني غير صالح.",
+  "something_went_wrong": "حدث خطأ ما. حاول مرة أخرى."
+
+
+
+
 
 }

@@ -8,13 +8,18 @@ import '../../../../../provider/theme_provider/theme_provider.dart';
 import '../../home/widget/event_category.dart';
 
 class EventCategoryWithImage extends StatefulWidget {
-  const EventCategoryWithImage({super.key, required this.onCategorySelected});
+  const EventCategoryWithImage({
+    super.key,
+    required this.onCategorySelected,
+    this.initialCategoryName,
+  });
   final Function(
     String imageLightEvent,
     String imageDarkEvent,
     String nameEvent,
   )
   onCategorySelected;
+  final String? initialCategoryName;
 
   @override
   State<EventCategoryWithImage> createState() => _EventCategoryWithImageState();
@@ -24,16 +29,31 @@ class _EventCategoryWithImageState extends State<EventCategoryWithImage> {
   int selectedIndex = 1;
   List<EventModel> eventsModel = EventModel.events;
   @override
+  void initState() {
+    super.initState();
+    if (widget.initialCategoryName != null) {
+      int foundIndex = eventsModel.indexWhere(
+        (event) =>
+            event.eventName.toLowerCase() ==
+            widget.initialCategoryName!.toLowerCase(),
+      );
+      if (foundIndex != -1 && foundIndex != 0) {
+        selectedIndex = foundIndex;
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     var theme = Provider.of<ThemeProvider>(context);
-
+    final selectedEvent = eventsModel[selectedIndex];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onCategorySelected(
-        eventsModel[selectedIndex].imageLight!,
-        eventsModel[selectedIndex].imageDark!,
-        eventsModel[selectedIndex].eventName.tr(),
+        selectedEvent.imageLight!,
+        selectedEvent.imageDark!,
+        selectedEvent.eventName,
       );
     });
     return Column(
@@ -59,6 +79,11 @@ class _EventCategoryWithImageState extends State<EventCategoryWithImage> {
                 onTap: () {
                   selectedIndex = index;
                   setState(() {});
+                  widget.onCategorySelected(
+                    eventsModel[selectedIndex].imageLight!,
+                    eventsModel[selectedIndex].imageDark!,
+                    eventsModel[selectedIndex].eventName,
+                  );
                 },
                 borderRadius: BorderRadius.circular(28),
                 child: EventCategory(

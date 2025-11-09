@@ -8,7 +8,7 @@ class EventModelFire {
   DateTime dateEvent;
   String timeEvent;
   //String mapEvent;
-  bool? isFavourite;
+  bool isFavourite;
 
   EventModelFire({
     this.id = '',
